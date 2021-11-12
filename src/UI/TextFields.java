@@ -1,11 +1,11 @@
-package swing;
+package UI;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class GUI extends JFrame implements ActionListener {
+public class TextFields extends JFrame implements ActionListener {
 
     JButton rowsbutton;
     JTextField rows;
@@ -14,13 +14,14 @@ public class GUI extends JFrame implements ActionListener {
 
     JButton playButton;
 
-    public GUI(){
-        this.TextFields();
+    public TextFields(){
+        this.TextField();
     }
 
-    public void TextFields(){
+    public void TextField(){
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(new FlowLayout());
+        this.setTitle("Game of Life Clone");
 
         rowsbutton = new JButton("Submit Rows");
         rowsbutton.addActionListener(this);
@@ -116,9 +117,11 @@ public class GUI extends JFrame implements ActionListener {
         if(e.getSource()==playButton){
             if(!rowsbutton.isEnabled() && !colsbutton.isEnabled()){
                 this.dispose();
+                GameFrame game = new GameFrame(rows.getText(),cols.getText());
             }
 
         }
 
     }
 }
+
