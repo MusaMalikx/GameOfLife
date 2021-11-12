@@ -67,5 +67,21 @@ for(int i=0;i<row;i++)
     System.out.print('\n');
 }
     }
+    public boolean getCellStatus(int x,int y)
+    {
+        return grid[x][y].isAlive();
+    }
+    public void setCellStatus(int x,int y,boolean val)
+    {
+        grid[x][y].setStatus(val);
+    }
+    public int getCellNeighbours(int x,int y)
+    {
+        return grid[x][y].getNeighboursCount();
+    }
+    public void setCellNeighbours(int x,int y,int val)
+    {
+         grid[x][y].setNeighbours(val);
+    }
 
 }
