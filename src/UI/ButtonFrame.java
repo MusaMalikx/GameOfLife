@@ -8,7 +8,7 @@ import java.awt.event.ActionListener;
 public class ButtonFrame implements ActionListener {
 
     MainButton start,reset,next;
-    int counter;
+    int counter,delay;
     JLabel label;
 
     Timer timer = new Timer(500, new ActionListener() {
@@ -16,13 +16,15 @@ public class ButtonFrame implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             counter++;
             label.setText(Integer.toString(counter));
+            //System.out.println(delay);
         }
     });
 
     public ButtonFrame(){
-
+        //int star = 500;
         counter = 0;
-
+        delay = 0;
+        //this.delay = delay + star;
         label = new JLabel("");
 
         start = new MainButton("START");
@@ -59,6 +61,8 @@ public class ButtonFrame implements ActionListener {
         timer.stop();
         this.counter = 0;
         label.setText(Integer.toString(counter));
+        start.click = false;
+        start.btn.setText("START");
     }
 
     @Override

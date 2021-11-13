@@ -9,14 +9,16 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class GameFrame extends JFrame implements ChangeListener {
+public class GameFrame extends JFrame implements ChangeListener{
 
 
     //JButton start,reset,stop,clear;
+    SliderFrame slide;
     ButtonFrame btns;
     int rows;
     int columns;
-    JSlider slider;
+//    JSlider slider;
+//    JSlider speeder;
     JPanel GridPanel;
     //int GridArray[][];
     Cell[][] c;
@@ -27,8 +29,9 @@ public class GameFrame extends JFrame implements ChangeListener {
 //        stop = new JButton("STOP");
 //        clear = new JButton("CLEAR");
         btns = new ButtonFrame();
-        slider = new JSlider(0,100,50);
-
+        slide = new SliderFrame();
+//        slider = new JSlider(0,100,50);
+//        speeder = new JSlider(0,100,50);
         //this.rows = Integer.parseInt(r);
         this.rows = 20;
         //this.columns = Integer.parseInt(c);
@@ -40,6 +43,8 @@ public class GameFrame extends JFrame implements ChangeListener {
             c = new Cell [i][this.columns];
         }
 
+        slide.setColumns(this.columns);
+        slide.setRows(this.rows);
         this.UI_FRAME();
     }
 
@@ -50,7 +55,9 @@ public class GameFrame extends JFrame implements ChangeListener {
 //        stop = new JButton("STOP");
 //        clear = new JButton("CLEAR");
         btns = new ButtonFrame();
-        slider = new JSlider(0,100,50);
+        slide = new SliderFrame();
+//        slider = new JSlider(0,100,50);
+//        speeder = new JSlider(0,100,50);
 
         this.rows = Integer.parseInt(r);
         //this.rows = 100;
@@ -63,6 +70,8 @@ public class GameFrame extends JFrame implements ChangeListener {
             c[i] = new Cell [this.columns];
         }
 
+        slide.setColumns(this.columns);
+        slide.setRows(this.rows);
         this.UI_FRAME();
     }
 
@@ -139,17 +148,29 @@ public class GameFrame extends JFrame implements ChangeListener {
 //            }
 //        }
 
-        slider.setPreferredSize(new Dimension(100,50));
-        slider.setBackground(Color.pink);
-        //slider.setPaintTicks(true);
-        //slider.setMinorTickSpacing(2);
-
-        slider.setPaintTrack(true);
-        slider.setMajorTickSpacing(10);
-        slider.addChangeListener(this);
-        //slider.setPaintLabels(true);
-
-        panel2.add(slider);
+//        speeder.setPreferredSize(new Dimension(100,50));
+//        speeder.setBackground(Color.yellow);
+//        //slider.setPaintTicks(true);
+//        //slider.setMinorTickSpacing(2);
+//
+//        speeder.setPaintTrack(true);
+//        speeder.setMajorTickSpacing(10);
+//        speeder.addChangeListener(this);
+//        panel2.add(speeder);
+//
+//        slider.setPreferredSize(new Dimension(100,50));
+//        slider.setBackground(Color.pink);
+//        //slider.setPaintTicks(true);
+//        //slider.setMinorTickSpacing(2);
+//
+//        slider.setPaintTrack(true);
+//        slider.setMajorTickSpacing(10);
+//        slider.addChangeListener(this);
+//        //slider.setPaintLabels(true);
+        slide.speeder.addChangeListener(this);
+        slide.slider.addChangeListener(this);
+        panel2.add(slide.speeder);
+        panel2.add(slide.slider);
 //        panel2.add(start);
 //        panel2.add(reset);
 //        panel2.add(clear);
@@ -189,14 +210,18 @@ public class GameFrame extends JFrame implements ChangeListener {
 
     @Override
     public void stateChanged(ChangeEvent e) {
-        System.out.println(slider.getValue());
-        if(slider.getValue() > 50){
-            int check = slider.getValue() - 2;
-            this.rows -= check;
-            this.columns -= check;
-            System.out.println("Rows "+ this.rows);
-            System.out.println("Columns "+this.columns);
+        if(e.getSource() == slide.speeder){
+            System.out.println(slide.speeder.getValue());
+            if(slide.speeder.getValue() > 25){
+                int check = 50 - slide.speeder.getValue();
+                btns.delay = check * 10 ;
+                btns.timer.setDelay(btns.delay);
+            }
+            else if(slide.speeder.getValue() < 25){
+                int check = 50 - slide.speeder.getValue();
+                btns.delay = check * 20 ;
+                btns.timer.setDelay(btns.delay);
+            }
         }
-        //his.UI_GRID();
     }
 }
