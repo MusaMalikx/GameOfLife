@@ -1,9 +1,13 @@
 package UI;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public class GameFrame extends JFrame implements ChangeListener {
 
@@ -13,6 +17,8 @@ public class GameFrame extends JFrame implements ChangeListener {
     int columns;
     JSlider slider;
     JPanel GridPanel;
+    int GridArray[][];
+    Cell c[][];
 
     public GameFrame(){
         start = new JButton("START");
@@ -25,10 +31,17 @@ public class GameFrame extends JFrame implements ChangeListener {
         this.rows = 20;
         //this.columns = Integer.parseInt(c);
         this.columns = 40;
+
+        c = new Cell [this.rows][];
+
+        for (int i = 0; i < this.columns; i++) {
+            c = new Cell [i][this.columns];
+        }
+
         this.UI_FRAME();
     }
 
-    public GameFrame(String r, String c){
+    public GameFrame(String r, String co){
 
         start = new JButton("START");
         reset = new JButton("RESET");
@@ -38,8 +51,15 @@ public class GameFrame extends JFrame implements ChangeListener {
 
         this.rows = Integer.parseInt(r);
         //this.rows = 100;
-        this.columns = Integer.parseInt(c);
+        this.columns = Integer.parseInt(co);
         //this.columns = 100;
+
+        c = new Cell [this.rows][];
+
+        for (int i = 0; i < this.columns; i++) {
+            c[i] = new Cell [this.columns];
+        }
+
         this.UI_FRAME();
     }
 
@@ -85,11 +105,16 @@ public class GameFrame extends JFrame implements ChangeListener {
         panel2.setPreferredSize(new Dimension(100,100));
         panel3.setPreferredSize(new Dimension(100,100));
 
-        JLabel label = new JLabel();
-        ImageIcon top = new ImageIcon("top.PNG");
-        label.setIcon(top);
-        panel1.setLayout(null);
-        panel1.add(label);
+//        JLabel label = new JLabel();
+//        ImageIcon top = new ImageIcon("top.PNG");
+//        label.setIcon(top);
+//        panel1.setLayout(null);
+//        panel1.add(label);
+
+//        BufferedImage myPicture = ImageIO.read("top.PNG"));
+//        JLabel picLabel = new JLabel(new ImageIcon(myPicture));
+//        //add(picLabel);
+//        panel1.add(picLabel);
 
         this.add(panel1,BorderLayout.NORTH);
         this.add(panel2,BorderLayout.SOUTH);
@@ -128,18 +153,29 @@ public class GameFrame extends JFrame implements ChangeListener {
         panel2.add(stop);
 
         this.setVisible(true);
-
+        //this.PrintCellLocation();
     }
 
     public void UI_GRID(){
         GridPanel.setLayout(new GridLayout(this.rows,this.columns));
         for (int i = 0; i < this.rows; i++) {
             for (int j = 0; j < this.columns; j++) {
-                JButton btn = new JButton("");
-                btn.setBackground(Color.lightGray);
-                btn.setBorder(BorderFactory.createEtchedBorder());
-                GridPanel.add(btn);
+//                JButton btn = new JButton("");
+//                btn.setBackground(Color.lightGray);
+//                btn.setBorder(BorderFactory.createEtchedBorder());
+//                System.out.println(btn.getLocation());
+                c[i][j] = new Cell(i,j);
+                GridPanel.add(c[i][j].getBtn());
             }
+        }
+    }
+
+    public void PrintCellLocation(){
+        for (int i = 0; i < this.rows; i++) {
+            for (int j = 0; j < this.columns; j++) {
+                System.out.println(c[i][j].x + " " + c[i][j].y + "  ");
+            }
+            System.out.println('\n');
         }
     }
 
