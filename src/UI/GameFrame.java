@@ -12,19 +12,21 @@ import java.io.IOException;
 public class GameFrame extends JFrame implements ChangeListener {
 
 
-    JButton start,reset,stop,clear;
+    //JButton start,reset,stop,clear;
+    ButtonFrame btns;
     int rows;
     int columns;
     JSlider slider;
     JPanel GridPanel;
-    int GridArray[][];
-    Cell c[][];
+    //int GridArray[][];
+    Cell[][] c;
 
     public GameFrame(){
-        start = new JButton("START");
-        reset = new JButton("RESET");
-        stop = new JButton("STOP");
-        clear = new JButton("CLEAR");
+//        start = new JButton("START");
+//        reset = new JButton("RESET");
+//        stop = new JButton("STOP");
+//        clear = new JButton("CLEAR");
+        btns = new ButtonFrame();
         slider = new JSlider(0,100,50);
 
         //this.rows = Integer.parseInt(r);
@@ -43,10 +45,11 @@ public class GameFrame extends JFrame implements ChangeListener {
 
     public GameFrame(String r, String co){
 
-        start = new JButton("START");
-        reset = new JButton("RESET");
-        stop = new JButton("STOP");
-        clear = new JButton("CLEAR");
+//        start = new JButton("START");
+//        reset = new JButton("RESET");
+//        stop = new JButton("STOP");
+//        clear = new JButton("CLEAR");
+        btns = new ButtonFrame();
         slider = new JSlider(0,100,50);
 
         this.rows = Integer.parseInt(r);
@@ -136,21 +139,26 @@ public class GameFrame extends JFrame implements ChangeListener {
 //            }
 //        }
 
-        slider.setPreferredSize(new Dimension(250,50));
+        slider.setPreferredSize(new Dimension(100,50));
         slider.setBackground(Color.pink);
         //slider.setPaintTicks(true);
         //slider.setMinorTickSpacing(2);
 
         slider.setPaintTrack(true);
-        slider.setMajorTickSpacing(2);
+        slider.setMajorTickSpacing(10);
         slider.addChangeListener(this);
         //slider.setPaintLabels(true);
 
         panel2.add(slider);
-        panel2.add(start);
-        panel2.add(reset);
-        panel2.add(clear);
-        panel2.add(stop);
+//        panel2.add(start);
+//        panel2.add(reset);
+//        panel2.add(clear);
+//        panel2.add(stop);
+        panel2.add(btns.start.btn);
+        panel2.add(btns.reset.btn);
+        //panel2.add(btns.stop.btn);
+        panel2.add(btns.next.btn);
+        panel2.add(btns.label);
 
         this.setVisible(true);
         //this.PrintCellLocation();
