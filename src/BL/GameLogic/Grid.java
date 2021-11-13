@@ -6,6 +6,8 @@ public class Grid {
     private  cell grid[][];
     private int row;
     private int col;
+    private Grid_Controller Controller;
+
     public Grid()
     {
         row=col=0;
