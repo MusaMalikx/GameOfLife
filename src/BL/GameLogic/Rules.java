@@ -16,14 +16,22 @@ public class Rules {
                 {
                     for(int m=-1;m<2;m++)
                     {
-                        if(i+l>=0 && i+l< grid.getRow() && m+j>=0 && m+j<= grid.getCol())
+                        if(i+l>=0 && i+l< grid.getRow() && m+j>=0 && m+j< grid.getCol() )
                         {
-                            neighbourCount++;
-
+                            if(grid.getCellStatus(i+l,m+j))
+                            {
+                                neighbourCount++;
+                            }
                         }
                     }
                 }
-                grid.setCellNeighbours(i,j,neighbourCount);
+                if(grid.getCellStatus(i,j)) {
+                    grid.setCellNeighbours(i, j, neighbourCount-1);
+                }
+                else
+                {
+                    grid.setCellNeighbours(i, j, neighbourCount);
+                }
             }
         }
 
@@ -70,6 +78,14 @@ public class Rules {
                     future[i][j].setStatus(grid.getCellStatus(i,j));
                     future[i][j].setPosition(i,j);
                 }
+            }
+        }
+        for (int i = 0; i <grid.getRow(); i++)
+        {
+            for (int j = 0; j < grid.getCol(); j++)
+            {
+                grid.setCellStatus(i,j,future[i][j].isAlive());
+
             }
         }
     }
