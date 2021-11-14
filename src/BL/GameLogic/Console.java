@@ -33,13 +33,54 @@ public class Console {
         r.ApplyRules(grid);
 
     }
-    public void SpeedControl()
-    {}
-    public void zoomControl()
-    {}
-    public void printGrid(Grid grid)
+    public void SpeedControl(Grid_Controller controller)
     {
-        grid.printGrid();
+        Scanner sc= new Scanner(System.in); //System.in is a standard input stream.
+
+        System.out.print("Enter Speed (max 10) : ");
+        int x= sc.nextInt();
+        controller.setSpeed(x);
+    }
+    public void zoomControl(Grid_Controller controller)
+    {
+        Scanner sc= new Scanner(System.in); //System.in is a standard input stream.
+
+        System.out.print("Enter zoom (max 10) : ");
+        int x= sc.nextInt();
+        controller.setZoom(x);
+    }
+    public void printGrid(Grid grid, Grid_Controller cont)
+    {
+        cell temp[][]= new cell[grid.getRow()][grid.getCol()];;
+        for (int i = 0; i <grid.getRow(); i++)
+        {
+            for (int j = 0; j < grid.getCol(); j++)
+            {
+                temp[i][j] = new cell();
+            }
+        }
+
+        for (int i = 0; i <grid.getRow(); i++)
+        {
+            for (int j = 0; j < grid.getCol(); j++)
+            {
+                grid.setCellStatus(i,j,temp[i][j].isAlive());
+
+            }
+        }
+
+        int zoom=cont.getZoom();
+        zoom =zoom/2;
+        for(int i=0+zoom;i< grid.getRow()-zoom;i++)
+        {
+            for(int j=0+zoom;j< grid.getCol()-zoom;j++)
+            {
+                temp[i][j].printCell();
+                System.out.print(" ");
+            }
+            System.out.print('\n');
+        }
+
     }
 
 

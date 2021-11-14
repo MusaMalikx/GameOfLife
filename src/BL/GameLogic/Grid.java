@@ -6,12 +6,11 @@ public class Grid {
     private  cell grid[][];
     private int row;
     private int col;
-    private Grid_Controller Controller;
+
 
     public Grid()
     {
         row=col=0;
-
     }
     public Grid(int r, int c)
     {
@@ -59,15 +58,15 @@ public class Grid {
 
     public void printGrid()
     {
-for(int i=0;i<row;i++)
-{
-    for(int j=0;j<col;j++)
+    for(int i=0;i<row;i++)
     {
-        grid[i][j].printCell();
-        System.out.print(" ");
-    }
+        for(int j=0;j<col;j++)
+        {
+            grid[i][j].printCell();
+            System.out.print(" ");
+        }
     System.out.print('\n');
-}
+    }
     }
     public boolean getCellStatus(int x,int y)
     {
