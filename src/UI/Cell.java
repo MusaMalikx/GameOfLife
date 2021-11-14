@@ -28,8 +28,14 @@ public class Cell extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == btn){
-            this.btn.setBackground(Color.yellow);
-            this.click = true;
+            if(!this.click){
+                this.btn.setBackground(Color.yellow);
+                this.click = true;
+            }
+            else{
+                this.btn.setBackground(Color.lightGray);
+                this.click = false;
+            }
         }
     }
 }

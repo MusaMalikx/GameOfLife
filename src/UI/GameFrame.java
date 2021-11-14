@@ -246,6 +246,14 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
         label.setText(Integer.toString(counter));
         start.click = false;
         start.btn.setText("START");
+
+        for (int i = 0; i < this.rows; i++) {
+            for (int j = 0; j < this.columns; j++) {
+                //c[i][j] = new Cell(i,j);
+                c[i][j].getBtn().setBackground(Color.lightGray);
+            }
+        }
+
     }
 
     @Override
