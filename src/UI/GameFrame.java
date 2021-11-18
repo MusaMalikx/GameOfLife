@@ -10,7 +10,7 @@ import java.awt.event.ActionListener;
 public class GameFrame extends JFrame implements ChangeListener, ActionListener
 {
     MainButton start,reset,next;
-    int counter,delay;
+    int counter,delay,sliderCount;
     JLabel label;
 
     int rows;
@@ -18,6 +18,7 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
     JSlider slider,speeder;
     JPanel GridPanel;
     Cell[][] c;
+    JButton check;
 
     Timer timer = new Timer(500, new ActionListener() {
         @Override
@@ -28,6 +29,7 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
     });
 
     public GameFrame(){
+        sliderCount = 25;
         counter = 0;
         delay = 0;
         label = new JLabel("");
@@ -58,7 +60,7 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
         slider.setBackground(Color.pink);
 
         slider.setPaintTrack(true);
-        slider.setMajorTickSpacing(10);
+        slider.setMajorTickSpacing(2);
         slider.addChangeListener(this);
 
         slider.addChangeListener(this);
@@ -179,6 +181,10 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
         panel2.add(next.btn);
         panel2.add(label);
 
+        check = new JButton("CHECK");
+        panel2.add(check);
+        check.addActionListener(this);
+
         this.setVisible(true);
     }
 
@@ -198,24 +204,27 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
         }
     }
 
-    public void UpdateUI_Grid(int r, int co){
-        this.rows = r;
-        this.columns = co;
+    public void UpdateUI_Grid(){
+        //this.rows = r;
+        //this.columns = co;
+        System.out.println("Row "+ this.rows+" Col "+this.columns);
         GridPanel.setLayout(new GridLayout(this.rows,this.columns));
+        //GridPanel.repaint();
 
-        c = new Cell [this.rows][];
+        GridPanel.removeAll();
+        //Cell[][]ci;
 
-        for (int i = 0; i < this.columns; i++) {
-            c = new Cell [i][this.columns];
-        }
-//        GridPanel.removeAll();
-//        GridPanel.setLayout(new GridLayout(2,4));
         for (int i = 0; i < this.rows; i++) {
             for (int j = 0; j < this.columns; j++) {
                 c[i][j] = new Cell(i,j);
                 GridPanel.add(c[i][j].getBtn());
             }
         }
+
+        GridPanel.revalidate();
+        GridPanel.repaint();
+
+        //System.out.println("Hello Dear");
     }
 
     public void PrintCellLocation(){
@@ -247,6 +256,13 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
         start.click = false;
         start.btn.setText("START");
 
+        slider.setValue(25);
+        speeder.setValue(25);
+
+        this.rows = 20;
+        this.columns = 40;
+        this.UpdateUI_Grid();
+
         for (int i = 0; i < this.rows; i++) {
             for (int j = 0; j < this.columns; j++) {
                 //c[i][j] = new Cell(i,j);
@@ -271,6 +287,21 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
                 this.timer.setDelay(this.delay);
             }
         }
+        if(e.getSource()==slider) {
+            if(slider.getValue() > sliderCount) {
+                System.out.println("Slider Value " + slider.getValue() + " Rows : " + this.rows + " Columns : " + this.columns);
+                    this.rows -= 1;
+                    this.columns -= 2;
+                    this.UpdateUI_Grid();
+                }
+            if(slider.getValue() < sliderCount) {
+                System.out.println("Slider Value " + slider.getValue() + " Rows : " + this.rows + " Columns : " + this.columns);
+                    this.rows += 1;
+                    this.columns += 2;
+                    this.UpdateUI_Grid();
+            }
+            sliderCount = slider.getValue();
+        }
     }
 
     @Override
@@ -292,6 +323,9 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
         }
         if(e.getSource()==reset.btn){
             this.ResetGame();
+        }
+        if(e.getSource()==check){
+            this.UpdateUI_Grid();
         }
     }
 }
