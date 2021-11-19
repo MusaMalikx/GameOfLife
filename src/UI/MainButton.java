@@ -7,7 +7,7 @@ public class MainButton {
     JButton btn;
 
     public MainButton(String s){
-        this.click=false;
+        this.click = false;
         this.btn = new JButton(s);
     }
 

@@ -10,7 +10,7 @@ import java.awt.event.ActionListener;
 public class GameFrame extends JFrame implements ChangeListener, ActionListener
 {
     MainButton start,reset,next;
-    int counter,delay,sliderCount;
+    int counter,delay,sliderCount,speederCount;
     JLabel label;
 
     int rows;
@@ -29,7 +29,8 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
     });
 
     public GameFrame(){
-        sliderCount = 25;
+        sliderCount = 0;
+        speederCount = 0;
         counter = 0;
         delay = 0;
         label = new JLabel("");
@@ -46,21 +47,21 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
 
         label.setText(Integer.toString(this.counter));
 
-        slider = new JSlider(0,50,25);
-        speeder = new JSlider(0,50,25);
+        slider = new JSlider(0,15,0);
+        speeder = new JSlider(0,25,0);
 
         speeder.setPreferredSize(new Dimension(100,50));
         speeder.setBackground(Color.yellow);
 
-        speeder.setPaintTrack(true);
-        speeder.setMajorTickSpacing(10);
-        speeder.addChangeListener(this);
+//        speeder.setPaintTrack(true);
+//        speeder.setMajorTickSpacing(10);
+//        speeder.addChangeListener(this);
 
         slider.setPreferredSize(new Dimension(100,50));
         slider.setBackground(Color.pink);
 
         slider.setPaintTrack(true);
-        slider.setMajorTickSpacing(2);
+        slider.setMajorTickSpacing(3);
         slider.addChangeListener(this);
 
         slider.addChangeListener(this);
@@ -125,6 +126,7 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(1200,700);
+        //this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setLayout(new BorderLayout());
         this.setTitle("Game of Life Clone");
 
@@ -181,9 +183,9 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
         panel2.add(next.btn);
         panel2.add(label);
 
-        check = new JButton("CHECK");
-        panel2.add(check);
-        check.addActionListener(this);
+//        check = new JButton("CHECK");
+//        panel2.add(check);
+//        check.addActionListener(this);
 
         this.setVisible(true);
     }
@@ -256,8 +258,8 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
         start.click = false;
         start.btn.setText("START");
 
-        slider.setValue(25);
-        speeder.setValue(25);
+        slider.setValue(0);
+        speeder.setValue(0);
 
         this.rows = 20;
         this.columns = 40;
@@ -276,29 +278,44 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
     public void stateChanged(ChangeEvent e) {
         if(e.getSource() == speeder){
             System.out.println(speeder.getValue());
-            if(speeder.getValue() > 25){
-                int check = 50 - speeder.getValue();
+            if(speeder.getValue() > speederCount){
+                int check = 25 - speeder.getValue();
                 this.delay = check * 10 ;
                 this.timer.setDelay(this.delay);
+                System.out.println("Greater");
             }
-            else if(speeder.getValue() < 25){
-                int check = 50 - speeder.getValue();
+            else if(speeder.getValue() < speederCount){
+                int check = 25 - speeder.getValue();
                 this.delay = check * 20 ;
                 this.timer.setDelay(this.delay);
+                System.out.println("Lesser");
             }
+            speederCount = speeder.getValue();
         }
         if(e.getSource()==slider) {
             if(slider.getValue() > sliderCount) {
                 System.out.println("Slider Value " + slider.getValue() + " Rows : " + this.rows + " Columns : " + this.columns);
                     this.rows -= 1;
                     this.columns -= 2;
-                    this.UpdateUI_Grid();
+                    if(this.rows < 20 && this.columns < 40 )
+                        this.UpdateUI_Grid();
+                    else{
+                        this.rows = 20;
+                        this.columns = 40;
+                        this.UpdateUI_Grid();
+                    }
                 }
             if(slider.getValue() < sliderCount) {
                 System.out.println("Slider Value " + slider.getValue() + " Rows : " + this.rows + " Columns : " + this.columns);
                     this.rows += 1;
                     this.columns += 2;
-                    this.UpdateUI_Grid();
+                    if(this.rows < 20 && this.columns < 40 )
+                        this.UpdateUI_Grid();
+                    else{
+                        this.rows = 20;
+                        this.columns = 40;
+                        this.UpdateUI_Grid();
+                    }
             }
             sliderCount = slider.getValue();
         }
