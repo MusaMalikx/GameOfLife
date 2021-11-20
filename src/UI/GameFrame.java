@@ -6,8 +6,6 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.border.Border;
-
 
 public class GameFrame extends JFrame implements ChangeListener, ActionListener
 {
@@ -21,12 +19,6 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
     JPanel GridPanel;
     Cell[][] c;
     JButton check;
-
-    //////////////////////////////
-
-
-
-    ///////////////////////////
 
     Timer timer = new Timer(500, new ActionListener() {
         @Override
@@ -45,28 +37,22 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
         label.setFont(new Font("Consolas",Font.PLAIN,14));
 
         //BufferedImage image = ImageIO.read(getClass().getResource("../Images/start.png"));
-        ImageIcon playIcon = new ImageIcon(new ImageIcon("C:\\Users\\maida tariq\\Desktop\\sda_project\\project\\GameOfLife\\src\\Images\\start.png").getImage().getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH));
+        ImageIcon playIcon = new ImageIcon(getClass().getResource("/Images/start.png"));//.getImage().getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH));
+
+//        Image img = playIcon.getImage();
+//        Image imgScale = img.getScaledInstance(start.btn.getWidth(),start.btn.getHeight(),Image.SCALE_SMOOTH);
+//        ImageIcon i = new ImageIcon(imgScale);
+
         start = new MainButton("START",playIcon);
-        //...............
-        start.btn.setBorder(new RoundBtn(8));
-        start.btn.setBackground(Color.CYAN);
-       //................
         start.btn.addActionListener(this);
 
-        ImageIcon nextIcon = new ImageIcon(new ImageIcon("C:\\Users\\maida tariq\\Desktop\\sda_project\\project\\GameOfLife\\src\\Images\\next.png").getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT));
+        ImageIcon nextIcon = new ImageIcon(getClass().getResource("/Images/next.png"));//new ImageIcon("F:\\Project\\GameOfLife\\src\\Images\\next.png").getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT));
         next = new MainButton("NEXT",nextIcon);
         next.btn.addActionListener(this);
-        //................
-        next.btn.setBorder(new RoundBtn(8));
-        next.btn.setBackground(Color.CYAN);
-        //................
-        ImageIcon resetIcon = new ImageIcon(new ImageIcon("C:\\Users\\maida tariq\\Desktop\\sda_project\\project\\GameOfLife\\src\\Images\\reset.png").getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT));
+
+        ImageIcon resetIcon = new ImageIcon(getClass().getResource("/Images/reset.png"));
         reset = new MainButton("RESET",resetIcon);
         reset.btn.addActionListener(this);
-        //.............
-        reset.btn.setBorder(new RoundBtn(8));
-        reset.btn.setBackground(Color.CYAN);
-        //.............
 
         label.setText(Integer.toString(this.counter));
         //label.setIcon(new ImageIcon(new ImageIcon("F:\\Project\\GameOfLife\\src\\Images\\start.png").getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT)));
@@ -189,10 +175,10 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
         this.add(panel2,BorderLayout.SOUTH);
         this.add(panel3,BorderLayout.CENTER);
 
-        ImageIcon ico = new ImageIcon("C:\\Users\\maida tariq\\Desktop\\sda_project\\project\\GameOfLife\\src\\Images\\top.png");
+        //ImageIcon ico = new ImageIcon("F:\\Project\\GameOfLife\\src\\Images\\top.png");
         JLabel l = new JLabel();
         //l.setPreferredSize(new Dimension(100,100));
-        l.setIcon(ico);
+        l.setIcon(new ImageIcon(getClass().getResource("/Images/top.PNG")));
 
         panel1.add(l);
 
@@ -226,9 +212,9 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
         panel2.add(next.btn);
         panel2.add(label);
 
-//        check = new JButton("CHECK");
-//        panel2.add(check);
-//        check.addActionListener(this);
+        check = new JButton("CHECK");
+        panel2.add(check);
+        check.addActionListener(this);
 
         this.setVisible(true);
     }
@@ -338,27 +324,27 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
         if(e.getSource()==slider) {
             if(slider.getValue() > sliderCount) {
                 System.out.println("Slider Value " + slider.getValue() + " Rows : " + this.rows + " Columns : " + this.columns);
-                    this.rows -= 1;
-                    this.columns -= 2;
-                    if(this.rows < 20 && this.columns < 40 )
-                        this.UpdateUI_Grid();
-                    else{
-                        this.rows = 20;
-                        this.columns = 40;
-                        this.UpdateUI_Grid();
-                    }
+                this.rows -= 1;
+                this.columns -= 2;
+                if(this.rows < 20 && this.columns < 40 )
+                    this.UpdateUI_Grid();
+                else{
+                    this.rows = 20;
+                    this.columns = 40;
+                    this.UpdateUI_Grid();
                 }
+            }
             if(slider.getValue() < sliderCount) {
                 System.out.println("Slider Value " + slider.getValue() + " Rows : " + this.rows + " Columns : " + this.columns);
-                    this.rows += 1;
-                    this.columns += 2;
-                    if(this.rows < 60 && this.columns < 80 )
-                        this.UpdateUI_Grid();
-                    else{
-                        this.rows = 60;
-                        this.columns = 80;
-                        this.UpdateUI_Grid();
-                    }
+                this.rows += 1;
+                this.columns += 2;
+                if(this.rows < 60 && this.columns < 80 )
+                    this.UpdateUI_Grid();
+                else{
+                    this.rows = 60;
+                    this.columns = 80;
+                    this.UpdateUI_Grid();
+                }
             }
             sliderCount = slider.getValue();
         }
@@ -370,13 +356,13 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
             if(!start.click){
                 start.click = true;
                 start.btn.setText("STOP");
-                start.btn.setIcon(new ImageIcon(new ImageIcon("C:\\Users\\maida tariq\\Desktop\\sda_project\\project\\GameOfLife\\src\\Images\\stop.png").getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT)));
+                start.btn.setIcon(new ImageIcon(new ImageIcon("F:\\Project\\GameOfLife\\src\\Images\\stop.png").getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT)));
                 this.StartGame();
             }
             else{
                 start.click = false;
                 start.btn.setText("START");
-                start.btn.setIcon(new ImageIcon(new ImageIcon("C:\\Users\\maida tariq\\Desktop\\sda_project\\project\\GameOfLife\\src\\Images\\start.png").getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT)));
+                start.btn.setIcon(new ImageIcon(new ImageIcon("F:\\Project\\GameOfLife\\src\\Images\\start.png").getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT)));
                 this.StopGame();
             }
         }
@@ -387,27 +373,7 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
             this.ResetGame();
         }
         if(e.getSource()==check){
-            this.UpdateUI_Grid();
+            About a = new About();
         }
-    }
-}
-class RoundBtn implements Border {
-    private int r;
-
-    RoundBtn(int r) {
-        this.r = r;
-    }
-
-    public Insets getBorderInsets(Component c) {
-        return new Insets(this.r + 1, this.r + 1, this.r + 2, this.r);
-    }
-
-    public boolean isBorderOpaque() {
-        return true;
-    }
-
-    public void paintBorder(Component c, Graphics g, int x, int y, int width, int height)
-    {
-        g.drawRoundRect(x, y, width - 1, height - 1, r, r);
     }
 }
