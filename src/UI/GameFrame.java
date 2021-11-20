@@ -1,14 +1,11 @@
 package UI;
-//import Images.*;
-import javax.imageio.ImageIO;
+
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
 
 public class GameFrame extends JFrame implements ChangeListener, ActionListener
 {
@@ -55,8 +52,8 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
         label.setText(Integer.toString(this.counter));
         //label.setIcon(new ImageIcon(new ImageIcon("F:\\Project\\GameOfLife\\src\\Images\\start.png").getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT)));
 
-        slider = new JSlider(0,15,0);
-        speeder = new JSlider(0,25,0);
+        slider = new JSlider(0,15,7);
+        speeder = new JSlider(0,25,13);
 
         speeder.setPreferredSize(new Dimension(100,50));
         speeder.setBackground(Color.yellow);
@@ -76,9 +73,9 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
         speeder.addChangeListener(this);
 
         //this.rows = Integer.parseInt(r);
-        this.rows = 20;
+        this.rows = 60;
         //this.columns = Integer.parseInt(c);
-        this.columns = 40;
+        this.columns = 80;
 
         this.UI_FRAME();
     }
@@ -187,6 +184,9 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
         panel3.add(GridPanel,BorderLayout.CENTER);
 
         this.UI_GRID();
+        this.rows = 20;
+        this.columns = 40;
+        this.UpdateUI_Grid();
 
         speeder.addChangeListener(this);
         slider.addChangeListener(this);
@@ -282,8 +282,8 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
         start.click = false;
         start.btn.setText("START");
 
-        slider.setValue(0);
-        speeder.setValue(0);
+        slider.setValue(7);
+        speeder.setValue(13);
 
         this.rows = 20;
         this.columns = 40;
@@ -333,11 +333,11 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
                 System.out.println("Slider Value " + slider.getValue() + " Rows : " + this.rows + " Columns : " + this.columns);
                     this.rows += 1;
                     this.columns += 2;
-                    if(this.rows < 20 && this.columns < 40 )
+                    if(this.rows < 60 && this.columns < 80 )
                         this.UpdateUI_Grid();
                     else{
-                        this.rows = 20;
-                        this.columns = 40;
+                        this.rows = 60;
+                        this.columns = 80;
                         this.UpdateUI_Grid();
                     }
             }
