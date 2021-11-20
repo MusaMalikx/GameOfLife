@@ -1,16 +1,19 @@
 package UI;
-
+//import Images.*;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
 
 public class GameFrame extends JFrame implements ChangeListener, ActionListener
 {
     MainButton start,reset,next;
-    int counter,delay;
+    int counter,delay,sliderCount,speederCount;
     JLabel label;
 
     int rows;
@@ -18,6 +21,7 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
     JSlider slider,speeder;
     JPanel GridPanel;
     Cell[][] c;
+    JButton check;
 
     Timer timer = new Timer(500, new ActionListener() {
         @Override
@@ -28,37 +32,44 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
     });
 
     public GameFrame(){
+        sliderCount = 0;
+        speederCount = 0;
         counter = 0;
         delay = 0;
         label = new JLabel("");
         label.setFont(new Font("Consolas",Font.PLAIN,14));
 
-        start = new MainButton("START");
+        //BufferedImage image = ImageIO.read(getClass().getResource("../Images/start.png"));
+        ImageIcon playIcon = new ImageIcon(new ImageIcon("F:\\Project\\GameOfLife\\src\\Images\\start.png").getImage().getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH));
+        start = new MainButton("START",playIcon);
         start.btn.addActionListener(this);
 
-        next = new MainButton("NEXT");
+        ImageIcon nextIcon = new ImageIcon(new ImageIcon("F:\\Project\\GameOfLife\\src\\Images\\next.png").getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT));
+        next = new MainButton("NEXT",nextIcon);
         next.btn.addActionListener(this);
 
-        reset = new MainButton("RESET");
+        ImageIcon resetIcon = new ImageIcon(new ImageIcon("F:\\Project\\GameOfLife\\src\\Images\\reset.png").getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT));
+        reset = new MainButton("RESET",resetIcon);
         reset.btn.addActionListener(this);
 
         label.setText(Integer.toString(this.counter));
+        //label.setIcon(new ImageIcon(new ImageIcon("F:\\Project\\GameOfLife\\src\\Images\\start.png").getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT)));
 
-        slider = new JSlider(0,50,25);
-        speeder = new JSlider(0,50,25);
+        slider = new JSlider(0,15,0);
+        speeder = new JSlider(0,25,0);
 
         speeder.setPreferredSize(new Dimension(100,50));
         speeder.setBackground(Color.yellow);
 
-        speeder.setPaintTrack(true);
-        speeder.setMajorTickSpacing(10);
-        speeder.addChangeListener(this);
+//        speeder.setPaintTrack(true);
+//        speeder.setMajorTickSpacing(10);
+//        speeder.addChangeListener(this);
 
         slider.setPreferredSize(new Dimension(100,50));
         slider.setBackground(Color.pink);
 
         slider.setPaintTrack(true);
-        slider.setMajorTickSpacing(10);
+        slider.setMajorTickSpacing(3);
         slider.addChangeListener(this);
 
         slider.addChangeListener(this);
@@ -78,14 +89,14 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
         delay = 0;
         label = new JLabel("");
 
-        start = new MainButton("START");
-        start.btn.addActionListener(this);
-
-        next = new MainButton("NEXT");
-        next.btn.addActionListener(this);
-
-        reset = new MainButton("RESET");
-        reset.btn.addActionListener(this);
+//        start = new MainButton("START");
+//        start.btn.addActionListener(this);
+//
+//        next = new MainButton("NEXT");
+//        next.btn.addActionListener(this);
+//
+//        reset = new MainButton("RESET");
+//        reset.btn.addActionListener(this);
 
         label.setText(Integer.toString(this.counter));
 
@@ -122,7 +133,9 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
     public void UI_FRAME(){
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(1200,700);
+        this.setSize(1150,650);
+        //this.pack();
+        //this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setLayout(new BorderLayout());
         this.setTitle("Game of Life Clone");
 
@@ -147,7 +160,7 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
         Jrpanel3.setBackground(Color.darkGray);
         Jrpanel4.setBackground(Color.darkGray);
 
-        panel1.setBackground(Color.red);
+        panel1.setBackground(Color.blue);
         panel2.setBackground(Color.pink);
         panel3.setLayout(new BorderLayout());
         panel3.setBackground(Color.white);
@@ -159,6 +172,13 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
         this.add(panel1,BorderLayout.NORTH);
         this.add(panel2,BorderLayout.SOUTH);
         this.add(panel3,BorderLayout.CENTER);
+
+        ImageIcon ico = new ImageIcon("F:\\Project\\GameOfLife\\src\\Images\\top.png");
+        JLabel l = new JLabel();
+        //l.setPreferredSize(new Dimension(100,100));
+        l.setIcon(ico);
+
+        panel1.add(l);
 
         panel3.add(Jrpanel1,BorderLayout.NORTH);
         panel3.add(Jrpanel2,BorderLayout.WEST);
@@ -174,10 +194,22 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
         panel2.add(speeder);
         panel2.add(slider);
 
+        //Icon icon = new ImageIcon("start.png");
+//        Box b = Box.createHorizontalBox();
+//        JLabel l = new JLabel();
+//        //l.setIcon(new ImageIcon("F:\\Project\\GameOfLife\\src\\Images\\start.png"));
+//        l.setIcon(new ImageIcon(new ImageIcon("F:\\Project\\GameOfLife\\src\\Images\\start.png").getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT)));
+//        b.add(l);
+//        b.add(start.btn);
+//        panel2.add(b);
         panel2.add(start.btn);
         panel2.add(reset.btn);
         panel2.add(next.btn);
         panel2.add(label);
+
+//        check = new JButton("CHECK");
+//        panel2.add(check);
+//        check.addActionListener(this);
 
         this.setVisible(true);
     }
@@ -198,24 +230,27 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
         }
     }
 
-    public void UpdateUI_Grid(int r, int co){
-        this.rows = r;
-        this.columns = co;
+    public void UpdateUI_Grid(){
+        //this.rows = r;
+        //this.columns = co;
+        System.out.println("Row "+ this.rows+" Col "+this.columns);
         GridPanel.setLayout(new GridLayout(this.rows,this.columns));
+        //GridPanel.repaint();
 
-        c = new Cell [this.rows][];
+        GridPanel.removeAll();
+        //Cell[][]ci;
 
-        for (int i = 0; i < this.columns; i++) {
-            c = new Cell [i][this.columns];
-        }
-//        GridPanel.removeAll();
-//        GridPanel.setLayout(new GridLayout(2,4));
         for (int i = 0; i < this.rows; i++) {
             for (int j = 0; j < this.columns; j++) {
                 c[i][j] = new Cell(i,j);
                 GridPanel.add(c[i][j].getBtn());
             }
         }
+
+        GridPanel.revalidate();
+        GridPanel.repaint();
+
+        //System.out.println("Hello Dear");
     }
 
     public void PrintCellLocation(){
@@ -246,22 +281,67 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
         label.setText(Integer.toString(counter));
         start.click = false;
         start.btn.setText("START");
+
+        slider.setValue(0);
+        speeder.setValue(0);
+
+        this.rows = 20;
+        this.columns = 40;
+        this.UpdateUI_Grid();
+
+        for (int i = 0; i < this.rows; i++) {
+            for (int j = 0; j < this.columns; j++) {
+                //c[i][j] = new Cell(i,j);
+                c[i][j].getBtn().setBackground(Color.lightGray);
+            }
+        }
+
     }
 
     @Override
     public void stateChanged(ChangeEvent e) {
         if(e.getSource() == speeder){
             System.out.println(speeder.getValue());
-            if(speeder.getValue() > 25){
-                int check = 50 - speeder.getValue();
+            if(speeder.getValue() > speederCount){
+                int check = 25 - speeder.getValue();
                 this.delay = check * 10 ;
                 this.timer.setDelay(this.delay);
+                System.out.println("Greater");
             }
-            else if(speeder.getValue() < 25){
-                int check = 50 - speeder.getValue();
+            else if(speeder.getValue() < speederCount){
+                int check = 25 - speeder.getValue();
                 this.delay = check * 20 ;
                 this.timer.setDelay(this.delay);
+                System.out.println("Lesser");
             }
+            speederCount = speeder.getValue();
+        }
+        if(e.getSource()==slider) {
+            if(slider.getValue() > sliderCount) {
+                System.out.println("Slider Value " + slider.getValue() + " Rows : " + this.rows + " Columns : " + this.columns);
+                    this.rows -= 1;
+                    this.columns -= 2;
+                    if(this.rows < 20 && this.columns < 40 )
+                        this.UpdateUI_Grid();
+                    else{
+                        this.rows = 20;
+                        this.columns = 40;
+                        this.UpdateUI_Grid();
+                    }
+                }
+            if(slider.getValue() < sliderCount) {
+                System.out.println("Slider Value " + slider.getValue() + " Rows : " + this.rows + " Columns : " + this.columns);
+                    this.rows += 1;
+                    this.columns += 2;
+                    if(this.rows < 20 && this.columns < 40 )
+                        this.UpdateUI_Grid();
+                    else{
+                        this.rows = 20;
+                        this.columns = 40;
+                        this.UpdateUI_Grid();
+                    }
+            }
+            sliderCount = slider.getValue();
         }
     }
 
@@ -271,11 +351,13 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
             if(!start.click){
                 start.click = true;
                 start.btn.setText("STOP");
+                start.btn.setIcon(new ImageIcon(new ImageIcon("F:\\Project\\GameOfLife\\src\\Images\\stop.png").getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT)));
                 this.StartGame();
             }
             else{
                 start.click = false;
                 start.btn.setText("START");
+                start.btn.setIcon(new ImageIcon(new ImageIcon("F:\\Project\\GameOfLife\\src\\Images\\start.png").getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT)));
                 this.StopGame();
             }
         }
@@ -284,6 +366,9 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
         }
         if(e.getSource()==reset.btn){
             this.ResetGame();
+        }
+        if(e.getSource()==check){
+            this.UpdateUI_Grid();
         }
     }
 }
