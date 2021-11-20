@@ -6,6 +6,8 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.border.Border;
+
 
 public class GameFrame extends JFrame implements ChangeListener, ActionListener
 {
@@ -19,6 +21,12 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
     JPanel GridPanel;
     Cell[][] c;
     JButton check;
+
+    //////////////////////////////
+
+
+
+    ///////////////////////////
 
     Timer timer = new Timer(500, new ActionListener() {
         @Override
@@ -37,17 +45,28 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
         label.setFont(new Font("Consolas",Font.PLAIN,14));
 
         //BufferedImage image = ImageIO.read(getClass().getResource("../Images/start.png"));
-        ImageIcon playIcon = new ImageIcon(new ImageIcon("F:\\Project\\GameOfLife\\src\\Images\\start.png").getImage().getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH));
+        ImageIcon playIcon = new ImageIcon(new ImageIcon("C:\\Users\\maida tariq\\Desktop\\sda_project\\project\\GameOfLife\\src\\Images\\start.png").getImage().getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH));
         start = new MainButton("START",playIcon);
+        //...............
+        start.btn.setBorder(new RoundBtn(8));
+        start.btn.setBackground(Color.CYAN);
+       //................
         start.btn.addActionListener(this);
 
-        ImageIcon nextIcon = new ImageIcon(new ImageIcon("F:\\Project\\GameOfLife\\src\\Images\\next.png").getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT));
+        ImageIcon nextIcon = new ImageIcon(new ImageIcon("C:\\Users\\maida tariq\\Desktop\\sda_project\\project\\GameOfLife\\src\\Images\\next.png").getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT));
         next = new MainButton("NEXT",nextIcon);
         next.btn.addActionListener(this);
-
-        ImageIcon resetIcon = new ImageIcon(new ImageIcon("F:\\Project\\GameOfLife\\src\\Images\\reset.png").getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT));
+        //................
+        next.btn.setBorder(new RoundBtn(8));
+        next.btn.setBackground(Color.CYAN);
+        //................
+        ImageIcon resetIcon = new ImageIcon(new ImageIcon("C:\\Users\\maida tariq\\Desktop\\sda_project\\project\\GameOfLife\\src\\Images\\reset.png").getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT));
         reset = new MainButton("RESET",resetIcon);
         reset.btn.addActionListener(this);
+        //.............
+        reset.btn.setBorder(new RoundBtn(8));
+        reset.btn.setBackground(Color.CYAN);
+        //.............
 
         label.setText(Integer.toString(this.counter));
         //label.setIcon(new ImageIcon(new ImageIcon("F:\\Project\\GameOfLife\\src\\Images\\start.png").getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT)));
@@ -170,7 +189,7 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
         this.add(panel2,BorderLayout.SOUTH);
         this.add(panel3,BorderLayout.CENTER);
 
-        ImageIcon ico = new ImageIcon("F:\\Project\\GameOfLife\\src\\Images\\top.png");
+        ImageIcon ico = new ImageIcon("C:\\Users\\maida tariq\\Desktop\\sda_project\\project\\GameOfLife\\src\\Images\\top.png");
         JLabel l = new JLabel();
         //l.setPreferredSize(new Dimension(100,100));
         l.setIcon(ico);
@@ -351,13 +370,13 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
             if(!start.click){
                 start.click = true;
                 start.btn.setText("STOP");
-                start.btn.setIcon(new ImageIcon(new ImageIcon("F:\\Project\\GameOfLife\\src\\Images\\stop.png").getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT)));
+                start.btn.setIcon(new ImageIcon(new ImageIcon("C:\\Users\\maida tariq\\Desktop\\sda_project\\project\\GameOfLife\\src\\Images\\stop.png").getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT)));
                 this.StartGame();
             }
             else{
                 start.click = false;
                 start.btn.setText("START");
-                start.btn.setIcon(new ImageIcon(new ImageIcon("F:\\Project\\GameOfLife\\src\\Images\\start.png").getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT)));
+                start.btn.setIcon(new ImageIcon(new ImageIcon("C:\\Users\\maida tariq\\Desktop\\sda_project\\project\\GameOfLife\\src\\Images\\start.png").getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT)));
                 this.StopGame();
             }
         }
@@ -370,5 +389,25 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
         if(e.getSource()==check){
             this.UpdateUI_Grid();
         }
+    }
+}
+class RoundBtn implements Border {
+    private int r;
+
+    RoundBtn(int r) {
+        this.r = r;
+    }
+
+    public Insets getBorderInsets(Component c) {
+        return new Insets(this.r + 1, this.r + 1, this.r + 2, this.r);
+    }
+
+    public boolean isBorderOpaque() {
+        return true;
+    }
+
+    public void paintBorder(Component c, Graphics g, int x, int y, int width, int height)
+    {
+        g.drawRoundRect(x, y, width - 1, height - 1, r, r);
     }
 }
