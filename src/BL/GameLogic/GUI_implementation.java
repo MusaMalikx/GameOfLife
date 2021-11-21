@@ -1,6 +1,8 @@
 package BL.GameLogic;
 
 public class GUI_implementation implements  GUI_Interface {
+    public GUI_implementation()
+    {}
     public int [][] next(int arr[][])
     {
 int col=40;
@@ -29,7 +31,7 @@ int row=20;
         {
             for(int j=0;j<col;j++)
             {
-                if(grid.getCellStatus(x,y)==false)
+                if(grid.getCellStatus(row,col)==false)
                 {
                     arr[i][j]=0;
                 }
