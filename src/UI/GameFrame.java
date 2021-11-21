@@ -1,4 +1,5 @@
 package UI;
+import java.lang.Thread;
 import BL.GameLogic.GUI_implementation;
 
 import javax.swing.*;
@@ -10,7 +11,7 @@ import java.awt.event.ActionListener;
 
 public class GameFrame extends JFrame implements ChangeListener, ActionListener
 {
-    MainButton start,reset,next;
+    MainButton start,reset,next,stop;
     int counter,delay,sliderCount,speederCount;
     JLabel label;
     GUI_implementation implementation;
@@ -31,7 +32,8 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
     });
 
     public GameFrame(GUI_implementation obj){
-        implementation=obj;
+        implementation= new GUI_implementation();
+        implementation= obj;
         sliderCount = 0;
         speederCount = 0;
         counter = 0;
@@ -47,8 +49,12 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
 //        Image imgScale = img.getScaledInstance(start.btn.getWidth(),start.btn.getHeight(),Image.SCALE_SMOOTH);
 //        ImageIcon i = new ImageIcon(imgScale);
 
+
         start = new MainButton("START",playIcon);
         start.btn.addActionListener(this);
+        ImageIcon stopIcon = new ImageIcon(getClass().getResource("/Images/stop.png"));//new ImageIcon("F:\\Project\\GameOfLife\\src\\Images\\next.png").getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT));
+        stop = new MainButton("STOP",stopIcon);
+        stop.btn.addActionListener(this);
 
         ImageIcon nextIcon = new ImageIcon(getClass().getResource("/Images/next.png"));//new ImageIcon("F:\\Project\\GameOfLife\\src\\Images\\next.png").getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT));
         next = new MainButton("NEXT",nextIcon);
@@ -215,6 +221,7 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
 //        b.add(start.btn);
 //        panel2.add(b);
         panel2.add(start.btn);
+        panel2.add(stop.btn);
         panel2.add(reset.btn);
         panel2.add(next.btn);
         panel2.add(label);
@@ -274,9 +281,55 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
         }
     }
 
-    public void StartGame(){
+    public void StartGame() {
 
+       for (int l=0;l<5;l++)
+        {
+            if(stop.getBool()==true)
+            {
+                break;
+            }
+
+        int arr[][] = new int[rows][columns];
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                if (c[i][j].click == false) {
+                    arr[i][j] = 0;
+                } else {
+                    arr[i][j] = 1;
+                }
+            }
+        }
+        int arr2[][]=new int [rows][columns];
+        arr2=implementation.next(arr);
+
+            for (int i = 0; i < rows; i++) {
+                for (int j = 0; j < columns; j++) {
+                    if(arr2[i][j]==0)
+                    {
+                        c[i][j].click=false;
+                        c[i][j].btn.setBackground(Color.lightGray);
+                    }
+                    else
+                    {
+                        c[i][j].click=true;
+                        c[i][j].btn.setBackground(Color.yellow);
+                    }
+                }
+            }
+            try {
+                Thread.sleep(1000);
+            }catch (Exception e) {
+
+            // catching the exception
+            System.out.println(e);
+        }
+            //  GridPanel.revalidate();
+            GridPanel.repaint();
+
+    }
         timer.start();
+
     }
 
     public void StopGame(){
@@ -361,26 +414,26 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource()==start.btn){
-            if(!start.click){
-                start.click = true;
-                start.btn.setText("STOP");
-                start.btn.setIcon(new ImageIcon(new ImageIcon("C:\\Users\\user\\Documents\\SDA\\SDA Project\\GameOfLife\\src\\Images\\stop.png").getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT)));
+            start.click=true;
+
                 this.StartGame();
-            }
-            else{
-                start.click = false;
-                start.btn.setText("START");
-                start.btn.setIcon(new ImageIcon(new ImageIcon("C:\\Users\\user\\Documents\\SDA\\SDA Project\\GameOfLife\\src\\Images\\start.png").getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT)));
-                this.StopGame();
-            }
+
+
+        }
+        if(e.getSource()==stop.btn){
+            stop.click=true;
+            this.StopGame();
         }
         if(e.getSource()==next.btn){
+            next.click=true;
             this.NextGame();
         }
         if(e.getSource()==reset.btn){
+            reset.click=true;
             this.ResetGame();
         }
         if(e.getSource()==check){
+
             About a = new About();
         }
     }

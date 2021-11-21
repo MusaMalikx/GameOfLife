@@ -31,13 +31,13 @@ int row=20;
         {
             for(int j=0;j<col;j++)
             {
-                if(grid.getCellStatus(row,col)==false)
+                if(grid.getCellStatus(i,j)==false)
                 {
-                    arr[i][j]=0;
+                    arr2[i][j]=0;
                 }
                 else
                 {
-                    arr[i][j]=1;
+                    arr2[i][j]=1;
                 }
             }
         }

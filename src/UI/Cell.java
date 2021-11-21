@@ -25,6 +25,7 @@ public class Cell extends JFrame implements ActionListener {
         return this.btn;
     }
 
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == btn){
