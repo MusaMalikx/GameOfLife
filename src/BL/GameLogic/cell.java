@@ -1,4 +1,5 @@
-package GameLogic;
+package BL.GameLogic;
+
 public class cell {
    
     int x,y;

@@ -1,4 +1,4 @@
-package GameLogic;
+package BL.GameLogic;
 
 public class Rules {
 

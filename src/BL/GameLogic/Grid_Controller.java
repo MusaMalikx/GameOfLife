@@ -1,4 +1,4 @@
-package GameLogic;
+package BL.GameLogic;
 
 import java.util.Objects;
 
