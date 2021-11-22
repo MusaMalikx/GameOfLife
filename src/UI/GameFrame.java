@@ -8,6 +8,7 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Objects;
 
 public class GameFrame extends JFrame implements ChangeListener, ActionListener
 {
@@ -43,7 +44,7 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
 
         //BufferedImage image = ImageIO.read(getClass().getResource("../Images/start.png"));
 
-        ImageIcon playIcon = new ImageIcon(getClass().getResource("/Images/start.png"));//.getImage().getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH));
+        ImageIcon playIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/Images/start.png")));//.getImage().getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH));
 
 //        Image img = playIcon.getImage();
 //        Image imgScale = img.getScaledInstance(start.btn.getWidth(),start.btn.getHeight(),Image.SCALE_SMOOTH);
@@ -56,11 +57,11 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
         stop = new MainButton("STOP",stopIcon);
         stop.btn.addActionListener(this);
 
-        ImageIcon nextIcon = new ImageIcon(getClass().getResource("/Images/next.png"));//new ImageIcon("F:\\Project\\GameOfLife\\src\\Images\\next.png").getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT));
+        ImageIcon nextIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/Images/next.png")));//new ImageIcon("F:\\Project\\GameOfLife\\src\\Images\\next.png").getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT));
         next = new MainButton("NEXT",nextIcon);
         next.btn.addActionListener(this);
 
-        ImageIcon resetIcon = new ImageIcon(getClass().getResource("/Images/reset.png"));
+        ImageIcon resetIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/Images/reset.png")));
 
         reset = new MainButton("RESET",resetIcon);
         reset.btn.addActionListener(this);
@@ -174,9 +175,9 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
         Jrpanel4.setBackground(Color.darkGray);
 
         panel1.setBackground(Color.blue);
-        panel2.setBackground(Color.pink);
+        //panel2.setBackground(Color.pink);
         panel3.setLayout(new BorderLayout());
-        panel3.setBackground(Color.white);
+        panel3.setBackground(Color.darkGray);
 
         panel1.setPreferredSize(new Dimension(100,100));
         panel2.setPreferredSize(new Dimension(100,100));
@@ -191,7 +192,7 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
 
         JLabel l = new JLabel();
         //l.setPreferredSize(new Dimension(100,100));
-        l.setIcon(new ImageIcon(getClass().getResource("/Images/top.PNG")));
+        l.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource("/Images/top.PNG"))));
 
         panel1.add(l);
 
