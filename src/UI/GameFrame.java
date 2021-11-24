@@ -72,15 +72,40 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
         slider = new JSlider(0,15,7);
         speeder = new JSlider(0,25,13);
 
+
+
+        //..........
+        slider.setPaintTrack(true);
+        slider.setPaintTicks(true);
+        slider.setPaintLabels(true);
+
+        // set spacing
+        slider.setMajorTickSpacing(5);
+        //slider.setMinorTickSpacing(1);
+//..........................................
+        speeder.setPaintTrack(true);
+        speeder.setPaintTicks(true);
+        speeder.setPaintLabels(true);
+
+        // set spacing
+        speeder.setMajorTickSpacing(8);
+        //slider.setMinorTickSpacing(1);
+
+
+
+        //.............
+
+
+
         speeder.setPreferredSize(new Dimension(100,50));
-        speeder.setBackground(Color.yellow);
+        speeder.setBackground(Color.white);
 
 //        speeder.setPaintTrack(true);
 //        speeder.setMajorTickSpacing(10);
 //        speeder.addChangeListener(this);
 
         slider.setPreferredSize(new Dimension(100,50));
-        slider.setBackground(Color.pink);
+        slider.setBackground(Color.white);
 
         slider.setPaintTrack(true);
         slider.setMajorTickSpacing(3);
@@ -120,14 +145,16 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
         speeder.setPreferredSize(new Dimension(100,50));
         speeder.setBackground(Color.yellow);
 
+
+
         speeder.setPaintTrack(true);
         speeder.setMajorTickSpacing(10);
         speeder.addChangeListener(this);
 
         slider.setPreferredSize(new Dimension(100,50));
-        slider.setBackground(Color.pink);
-        //slider.setPaintTicks(true);
-        //slider.setMinorTickSpacing(2);
+        slider.setBackground(Color.white);
+        slider.setPaintTicks(true);
+        slider.setMinorTickSpacing(2);
 
         slider.setPaintTrack(true);
         slider.setMajorTickSpacing(10);
@@ -209,6 +236,8 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
 
         speeder.addChangeListener(this);
         slider.addChangeListener(this);
+
+
 
         panel2.add(speeder);
         panel2.add(slider);
