@@ -51,10 +51,10 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
 //        ImageIcon i = new ImageIcon(imgScale);
 
 
-        start = new MainButton("START",playIcon);
+        start = new MainButton("START",playIcon,new Color(23, 215, 160),Color.darkGray);
         start.btn.addActionListener(this);
         ImageIcon stopIcon = new ImageIcon(getClass().getResource("/Images/stop.png"));//new ImageIcon("F:\\Project\\GameOfLife\\src\\Images\\next.png").getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT));
-        stop = new MainButton("STOP",stopIcon);
+        stop = new MainButton("STOP",stopIcon,new Color(255, 81, 81),Color.darkGray);
         stop.btn.addActionListener(this);
 
         ImageIcon nextIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/Images/next.png")));//new ImageIcon("F:\\Project\\GameOfLife\\src\\Images\\next.png").getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT));

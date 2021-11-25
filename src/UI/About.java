@@ -23,14 +23,15 @@ public class About extends JFrame {
     }
 
     public void Images() {
-        Member("/Members/malik.jpg");
+        Member("/Members/musa.jpg");
+        Member("/Members/maida.jpg");
         Member("/Members/suleiman.jpg");
     }
 
     public void Member(String str){
         ImageIcon ico = new ImageIcon(getClass().getResource(str));
         JLabel l = new JLabel();
-        l.setSize(new Dimension(400,250));
+        l.setSize(new Dimension(250,350));
         Image img = ico.getImage();
         Image imgScale = img.getScaledInstance(l.getWidth(),l.getHeight(),Image.SCALE_SMOOTH);
         ImageIcon i = new ImageIcon(imgScale);
