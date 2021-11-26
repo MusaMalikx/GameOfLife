@@ -16,7 +16,7 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
     int counter,delay,sliderCount,speederCount;
     JLabel label;
     GUI_implementation implementation;
-
+    int [][]arr;
     int rows;
     int columns;
     JSlider slider,speeder;
@@ -33,6 +33,8 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
     });
 
     public GameFrame(GUI_implementation obj){
+
+        arr=new int[60][80];
         implementation= new GUI_implementation();
         implementation= obj;
         sliderCount = 0;
@@ -311,16 +313,29 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
         }
     }
 
+
     public void StartGame() {
 
-       for (int l=0;l<5;l++)
+Thread GameLoop=new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                for (int l=0;;l++)
         {
             if(stop.getBool()==true)
             {
                 break;
             }
+            for (int i = 0; i < 60; i++) {
+                for (int j = 0; j < 80; j++) {
 
-        int arr[][] = new int[rows][columns];
+                    arr[i][j] = 0;
+
+                }
+            }
+
+        //int arr[][] = new int[rows][columns];
+
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 if (c[i][j].click == false) {
@@ -338,7 +353,7 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
                     if(arr2[i][j]==0)
                     {
                         c[i][j].click=false;
-                        c[i][j].btn.setBackground(Color.lightGray);
+                        c[i][j].btn.setBackground(Color.white);
                     }
                     else
                     {
@@ -348,7 +363,7 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
                 }
             }
             try {
-                Thread.sleep(1000);
+                Thread.sleep(speeder.getValue()*200);
             }catch (Exception e) {
 
             // catching the exception
@@ -358,7 +373,59 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
             GridPanel.repaint();
 
     }
+                counter++;
+                label.setText(Integer.toString(counter));
         timer.start();
+
+            }
+        });
+GameLoop.start();
+//       for (int l=0;l<5;l++)
+//        {
+//            if(stop.getBool()==true)
+//            {
+//                break;
+//            }
+//
+//        int arr[][] = new int[rows][columns];
+//        for (int i = 0; i < rows; i++) {
+//            for (int j = 0; j < columns; j++) {
+//                if (c[i][j].click == false) {
+//                    arr[i][j] = 0;
+//                } else {
+//                    arr[i][j] = 1;
+//                }
+//            }
+//        }
+//        int arr2[][]=new int [rows][columns];
+//        arr2=implementation.next(arr);
+//
+//            for (int i = 0; i < rows; i++) {
+//                for (int j = 0; j < columns; j++) {
+//                    if(arr2[i][j]==0)
+//                    {
+//                        c[i][j].click=false;
+//                        c[i][j].btn.setBackground(Color.white);
+//                    }
+//                    else
+//                    {
+//                        c[i][j].click=true;
+//                        c[i][j].btn.setBackground(Color.yellow);
+//                    }
+//                }
+//            }
+//            try {
+//                Thread.sleep(1000);
+//            }catch (Exception e) {
+//
+//            // catching the exception
+//            System.out.println(e);
+//        }
+//            //  GridPanel.revalidate();
+//            GridPanel.repaint();
+//
+//    }
+//        timer.start();
 
     }
 
@@ -367,6 +434,61 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
     }
 
     public void NextGame(){
+        Thread GameLoop=new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+
+                  //  int arr[][] = new int[60][80];
+                for (int i = 0; i < 60; i++) {
+                    for (int j = 0; j < 80; j++) {
+
+                            arr[i][j] = 0;
+
+                    }
+                }
+                    for (int i = 0; i < rows; i++) {
+                        for (int j = 0; j < columns; j++) {
+                            if (c[i][j].click == false) {
+                                arr[i][j] = 0;
+                            } else {
+                                arr[i][j] = 1;
+                            }
+                        }
+                    }
+                    int arr2[][]=new int [60][80];
+                    arr2=implementation.next(arr);
+
+                    for (int i = 0; i < rows; i++) {
+                        for (int j =0; j < columns; j++) {
+                            if(arr2[i][j]==0)
+                            {
+                                c[i][j].click=false;
+                                c[i][j].btn.setBackground(Color.white);
+                            }
+                            else if(arr2[i][j]==1)
+                            {
+                                c[i][j].click=true;
+                                c[i][j].btn.setBackground(Color.yellow);
+                            }
+                        }
+                    }
+                    try {
+                        Thread.sleep(speeder.getValue()*500);
+                    }catch (Exception e) {
+
+                        // catching the exception
+                        System.out.println(e);
+                    }
+                    //  GridPanel.revalidate();
+                    GridPanel.repaint();
+
+                }
+
+
+
+        });
+        GameLoop.start();
         counter++;
         label.setText(Integer.toString(counter));
     }
@@ -384,7 +506,13 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
         this.rows = 20;
         this.columns = 40;
         this.UpdateUI_Grid();
+        for (int i = 0; i < 60; i++) {
+            for (int j = 0; j < 80; j++) {
 
+                arr[i][j] = 0;
+
+            }
+        }
         for (int i = 0; i < this.rows; i++) {
             for (int j = 0; j < this.columns; j++) {
                 //c[i][j] = new Cell(i,j);
@@ -392,6 +520,26 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
             }
         }
 
+    }
+
+    public void updateCells() {
+       // int arr[][] = new int[60][80];
+        for (int i = 0; i < rows; i++) {
+            for (int j =0; j < columns; j++) {
+                if(arr[i][j]==0)
+                {
+                    c[i][j].click=false;
+                    c[i][j].btn.setBackground(Color.white);
+                }
+                else if(arr[i][j]==1)
+                {
+                    c[i][j].click=true;
+                    c[i][j].btn.setBackground(Color.yellow);
+                }
+            }
+
+
+        }
     }
 
     @Override
@@ -417,24 +565,31 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
                 System.out.println("Slider Value " + slider.getValue() + " Rows : " + this.rows + " Columns : " + this.columns);
                 this.rows -= 1;
                 this.columns -= 2;
-                if(this.rows < 20 && this.columns < 40 )
+                if(this.rows < 20 && this.columns < 40 ) {
                     this.UpdateUI_Grid();
+                    updateCells();
+                }
                 else{
                     this.rows = 20;
                     this.columns = 40;
                     this.UpdateUI_Grid();
+                    updateCells();
+
                 }
             }
             if(slider.getValue() < sliderCount) {
                 System.out.println("Slider Value " + slider.getValue() + " Rows : " + this.rows + " Columns : " + this.columns);
                 this.rows += 1;
                 this.columns += 2;
-                if(this.rows < 60 && this.columns < 80 )
+                if(this.rows < 60 && this.columns < 80 ) {
                     this.UpdateUI_Grid();
+                    updateCells();
+                }
                 else{
                     this.rows = 60;
                     this.columns = 80;
                     this.UpdateUI_Grid();
+                    updateCells();
                 }
             }
             sliderCount = slider.getValue();
@@ -445,13 +600,14 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
     public void actionPerformed(ActionEvent e) {
         if(e.getSource()==start.btn){
             start.click=true;
-
+            stop.click=false;
                 this.StartGame();
 
 
         }
         if(e.getSource()==stop.btn){
             stop.click=true;
+            start.click=false;
             this.StopGame();
         }
         if(e.getSource()==next.btn){

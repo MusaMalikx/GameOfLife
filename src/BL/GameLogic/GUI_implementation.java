@@ -5,8 +5,8 @@ public class GUI_implementation implements  GUI_Interface {
     {}
     public int [][] next(int arr[][])
     {
-int col=40;
-int row=20;
+int col=80;
+int row=60;
         Grid grid=new Grid(row,col);
         for(int i=0;i<row;i++)
         {
@@ -44,6 +44,10 @@ int row=20;
         return arr2;
 
     }
+    public void setCol(int a){}
+    public void getCol(){}
+    public void setRow(){}
+    public void getRow(){}
    public void reset()
    {
 
