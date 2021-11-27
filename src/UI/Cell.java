@@ -14,8 +14,8 @@ public class Cell extends JFrame implements ActionListener {
 
     public Cell(int x, int y){
         btn = new JButton("");
-        btn.setBackground(Color.lightGray);
-        btn.setBorder(BorderFactory.createLoweredBevelBorder());
+        btn.setBackground(Color.white);
+        //btn.setBorder(BorderFactory.createLoweredBevelBorder());
         btn.addActionListener(this);
         this.x = x;
         this.y = y;
@@ -25,6 +25,7 @@ public class Cell extends JFrame implements ActionListener {
         return this.btn;
     }
 
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == btn){
@@ -33,7 +34,7 @@ public class Cell extends JFrame implements ActionListener {
                 this.click = true;
             }
             else{
-                this.btn.setBackground(Color.lightGray);
+                this.btn.setBackground(Color.white);
                 this.click = false;
             }
         }
