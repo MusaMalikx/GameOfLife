@@ -12,7 +12,7 @@ import java.util.Objects;
 
 public class GameFrame extends JFrame implements ChangeListener, ActionListener
 {
-    MainButton start,reset,next,stop;
+    MainButton start,reset,next,stop,view,save;
     int counter,delay,sliderCount,speederCount;
     JLabel label;
     GUI_implementation implementation;
@@ -67,6 +67,12 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
 
         reset = new MainButton("RESET");
         reset.btn.addActionListener(this);
+
+        save = new MainButton("SAVE",new Color(100, 201, 207),Color.darkGray);
+        save.btn.addActionListener(this);
+
+        view = new MainButton("VIEW",new Color(100, 201, 207),Color.darkGray);
+        view.btn.addActionListener(this);
 
         label.setText(Integer.toString(this.counter));
         //label.setIcon(new ImageIcon(new ImageIcon("F:\\Project\\GameOfLife\\src\\Images\\start.png").getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT)));
@@ -145,26 +151,36 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
         JPanel Jrpanel4 = new JPanel();
         GridPanel = new JPanel();
 
+        JPanel Srpanel1 = new JPanel();
+        Srpanel1.setLayout(new BorderLayout());
+
+        JPanel centerPanel = new JPanel();
+        centerPanel.add(this.save.btn);
+        centerPanel.add(this.view.btn);
+
         Jrpanel1.setPreferredSize(new Dimension(13,13));
         Jrpanel2.setPreferredSize(new Dimension(13,13));
         Jrpanel3.setPreferredSize(new Dimension(13,13));
         Jrpanel4.setPreferredSize(new Dimension(13,13));
         GridPanel.setPreferredSize(new Dimension(100,100));
 
+        Srpanel1.add(Jrpanel1,BorderLayout.SOUTH);
+        Srpanel1.add(centerPanel,BorderLayout.CENTER);
+
         Jrpanel1.setBackground(Color.darkGray);
         Jrpanel2.setBackground(Color.darkGray);
         Jrpanel3.setBackground(Color.darkGray);
         Jrpanel4.setBackground(Color.darkGray);
 
-        panel1.setBackground(Color.blue);
+        panel1.setBackground(new Color(44, 39, 46));
         //panel2.setBackground(Color.pink);
         panel2.setLayout(new BorderLayout());
         panel3.setLayout(new BorderLayout());
         panel3.setBackground(Color.darkGray);
 
         panel1.setPreferredSize(new Dimension(100,100));
-        panel2.setPreferredSize(new Dimension(100,110));
-        panel3.setPreferredSize(new Dimension(100,100));
+        //panel2.setPreferredSize(new Dimension(100,110));
+        //panel3.setPreferredSize(new Dimension(100,100));
 
         this.add(panel1,BorderLayout.NORTH);
         this.add(panel2,BorderLayout.SOUTH);
@@ -179,7 +195,7 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
 
         panel1.add(l);
 
-        panel3.add(Jrpanel1,BorderLayout.NORTH);
+        panel3.add(Srpanel1,BorderLayout.NORTH);
         panel3.add(Jrpanel2,BorderLayout.WEST);
         panel3.add(Jrpanel3,BorderLayout.EAST);
         panel3.add(Jrpanel4,BorderLayout.SOUTH);
@@ -292,7 +308,7 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
 
     public void StartGame() {
 
-Thread GameLoop=new Thread(new Runnable() {
+    Thread GameLoop=new Thread(new Runnable() {
             @Override
             public void run() {
 
@@ -493,7 +509,7 @@ GameLoop.start();
         for (int i = 0; i < this.rows; i++) {
             for (int j = 0; j < this.columns; j++) {
                 //c[i][j] = new Cell(i,j);
-                c[i][j].getBtn().setBackground(Color.lightGray);
+                c[i][j].getBtn().setBackground(Color.white);
             }
         }
 
@@ -602,6 +618,12 @@ GameLoop.start();
         if(e.getSource()==check){
 
             About a = new About();
+        }
+        if(e.getSource() == save.btn){
+
+        }
+        if(e.getSource()==view.btn){
+            View v = new View();
         }
     }
 }
