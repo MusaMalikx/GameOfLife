@@ -8,7 +8,7 @@ public class MainButton {
     boolean click;
     JButton btn;
 
-    public MainButton(String s,ImageIcon icon){
+    public MainButton(String s){
         this.click = false;
         this.btn = new JButton(s);
         btn.setSize(25,20);
@@ -26,7 +26,7 @@ public class MainButton {
         //btn.setSize(new Dimension(5,5));
     }
 
-    public MainButton(String s,ImageIcon icon, Color c, Color f){
+    public MainButton(String s, Color c, Color f){
         this.click = false;
         this.btn = new JButton(s);
         btn.setSize(50,40);

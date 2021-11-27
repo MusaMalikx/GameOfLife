@@ -117,7 +117,7 @@ public class TextFields extends JFrame implements ActionListener {
         if(e.getSource()==playButton){
             if(!rowsbutton.isEnabled() && !colsbutton.isEnabled()){
                 this.dispose();
-                GameFrame game = new GameFrame(rows.getText(),cols.getText());
+                //GameFrame game = new GameFrame(rows.getText(),cols.getText());
             }
 
         }
