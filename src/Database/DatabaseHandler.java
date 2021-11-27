@@ -15,7 +15,7 @@ import java.sql.Types;
 public class DatabaseHandler implements StorageInterface {
 
     private String user = "admin";
-    private String password = "sambmr";
+    private String password = "admin123";
 
     public ArrayList<String> View_States() {
 
