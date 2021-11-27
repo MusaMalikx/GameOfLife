@@ -40,11 +40,94 @@ public class File_Handling implements file{
 
         fileNo = 0;
        }
-    public void viewState()
+
+    public static String fileToString(String filePath) throws Exception{
+        String input = null;
+        Scanner sc = new Scanner(new File(filePath));
+        StringBuffer sb = new StringBuffer();
+        while (sc.hasNextLine()) {
+            input = sc.nextLine();
+            sb.append(input);
+        }
+        return sb.toString();
+    }
+
+    public int[] viewState()throws Exception
     {
+        int arr[]=new int[10];
+        Scanner sc = null;
+
+        try {
+
+            File file = new File("Data.txt"); // java.io.File
+
+            sc = new Scanner(file);     // java.util.Scanner
+            int data;
+
+            int i=0;
+            while(sc.hasNextLine()) {
+
+                    data = Integer.parseInt(sc.next());
+                    arr[i]=data;
+                    i++;
+
+            }
+
+        }
+
+        catch(FileNotFoundException e)
+
+        {
+
+            e.printStackTrace();
+
+        }
+
+        finally {
+
+            if (sc != null) sc.close();
+
+        }
+        return arr;
 
     }
-    public void deleteState(int stateNum){}
+    public void deleteState(int stateNum)throws Exception{
+        try {
+
+            File file = new File("Data.txt"); // java.io.File
+            File file2 = new File(stateNum+".txt");
+
+            file2.delete();
+
+            String filePath = "Data.txt";
+            String result = fileToString(filePath);
+
+            //Replacing the word with desired one
+            Integer l = stateNum;
+            String c = l.toString();
+            result = result.replaceAll("\\b"+c+"\\b", "");
+            //Rewriting the contents of the file
+            PrintWriter writer = new PrintWriter(new File(filePath));
+            writer.append(result);
+            writer.flush();
+
+            writer.close();
+
+
+
+        }
+
+
+
+        catch(FileNotFoundException e)
+
+        {
+
+            e.printStackTrace();
+
+        }
+
+    }
 
     public int[][] loadState(int n)throws Exception
     {

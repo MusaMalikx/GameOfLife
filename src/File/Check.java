@@ -10,59 +10,46 @@ import java.util.*;
 import  java.lang.String;
 
 public class Check {
+    public static String fileToString(String filePath) throws Exception{
+        String input = null;
+        Scanner sc = new Scanner(new File(filePath));
+        StringBuffer sb = new StringBuffer();
+        while (sc.hasNextLine()) {
+            input = sc.nextLine();
+            sb.append(input);
+        }
+        return sb.toString();
+    }
     public static void main(String[] args) throws Exception {
-        int arr[][] = new int[3][3];
-        Integer l = 5;
-        String c = l.toString();
-
+        int arr[] = new int[10];
         Scanner sc = null;
 
         try {
 
-            File file = new File(c+".txt"); // java.io.File
-
+            File file = new File("Data.txt"); // java.io.File
 
             sc = new Scanner(file);     // java.util.Scanner
             int data;
 
+            int i = 0;
+            while (sc.hasNextLine()) {
 
-            for (int i = 0;i<3 ; i++) {
-
-
-                for (int j=0; j<3;j++) {
-
-                    data = Integer.parseInt(sc.next());
-                    System.out.print(data +" ");
-                    arr[i][j]=data;
-                }
-
-
-
+                data = Integer.parseInt(sc.next());
+                arr[i] = data;
+                i++;
 
             }
 
-        }
-
-        catch(FileNotFoundException e)
-
-        {
+        } catch (FileNotFoundException e) {
 
             e.printStackTrace();
 
-        }
-
-        finally {
+        } finally {
 
             if (sc != null) sc.close();
 
         }
-        System.out.print('\n');
-        for (int i = 0; i <3 ; i++) {
-            for (int j = 0; j < 3; j++) {
-                System.out.print(arr[i][j]+" ");
-            }
-            System.out.print('\n');
-        }
+
     }
 }
 
