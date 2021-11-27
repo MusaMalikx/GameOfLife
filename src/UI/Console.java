@@ -213,7 +213,7 @@ next=false;
 
     public void GO() {
 
-        while(1)
+        while(true)
         {
             printGrid();
             Scanner sc= new Scanner(System.in); //System.in is a standard input stream.
