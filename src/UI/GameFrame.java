@@ -33,7 +33,6 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
     });
 
     public GameFrame(GUI_implementation obj){
-
         arr=new int[60][80];
         implementation= new GUI_implementation();
         implementation= obj;
@@ -43,7 +42,7 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
         delay = 0;
         label = new JLabel("");
         label.setFont(new Font("Consolas",Font.PLAIN,14));
-
+        //label.setHorizontalTextPosition(JLabel.RIGHT);
         //BufferedImage image = ImageIO.read(getClass().getResource("../Images/start.png"));
 
         ImageIcon playIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/Images/start.png")));//.getImage().getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH));
@@ -53,19 +52,20 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
 //        ImageIcon i = new ImageIcon(imgScale);
 
 
-        start = new MainButton("START",playIcon,new Color(23, 215, 160),Color.darkGray);
+        start = new MainButton("START",new Color(23, 215, 160),Color.darkGray);
         start.btn.addActionListener(this);
         ImageIcon stopIcon = new ImageIcon(getClass().getResource("/Images/stop.png"));//new ImageIcon("F:\\Project\\GameOfLife\\src\\Images\\next.png").getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT));
-        stop = new MainButton("STOP",stopIcon,new Color(255, 81, 81),Color.darkGray);
+        stop = new MainButton("STOP",new Color(255, 81, 81),Color.darkGray);
+        stop.btn.setVisible(false);
         stop.btn.addActionListener(this);
 
         ImageIcon nextIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/Images/next.png")));//new ImageIcon("F:\\Project\\GameOfLife\\src\\Images\\next.png").getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT));
-        next = new MainButton("NEXT",nextIcon);
+        next = new MainButton("NEXT");
         next.btn.addActionListener(this);
 
         ImageIcon resetIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/Images/reset.png")));
 
-        reset = new MainButton("RESET",resetIcon);
+        reset = new MainButton("RESET");
         reset.btn.addActionListener(this);
 
         label.setText(Integer.toString(this.counter));
@@ -77,20 +77,20 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
 
 
         //..........
-        slider.setPaintTrack(true);
-        slider.setPaintTicks(true);
-        slider.setPaintLabels(true);
-
-        // set spacing
-        slider.setMajorTickSpacing(5);
+//        slider.setPaintTrack(true);
+//        slider.setPaintTicks(true);
+//        slider.setPaintLabels(true);
+//
+//        // set spacing
+//        slider.setMajorTickSpacing(5);
         //slider.setMinorTickSpacing(1);
 //..........................................
-        speeder.setPaintTrack(true);
-        speeder.setPaintTicks(true);
-        speeder.setPaintLabels(true);
-
-        // set spacing
-        speeder.setMajorTickSpacing(8);
+//        speeder.setPaintTrack(true);
+//        speeder.setPaintTicks(true);
+//        speeder.setPaintLabels(true);
+//
+//        // set spacing
+//        speeder.setMajorTickSpacing(8);
         //slider.setMinorTickSpacing(1);
 
 
@@ -99,19 +99,21 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
 
 
 
-        speeder.setPreferredSize(new Dimension(100,50));
-        speeder.setBackground(Color.white);
+        speeder.setPreferredSize(new Dimension(130,50));
+        speeder.setBorder(new RoundBtn(12));
+        //speeder.setBackground(Color.white);
 
 //        speeder.setPaintTrack(true);
 //        speeder.setMajorTickSpacing(10);
 //        speeder.addChangeListener(this);
 
-        slider.setPreferredSize(new Dimension(100,50));
-        slider.setBackground(Color.white);
-
-        slider.setPaintTrack(true);
-        slider.setMajorTickSpacing(3);
-        slider.addChangeListener(this);
+        slider.setPreferredSize(new Dimension(130,50));
+        slider.setBorder(new RoundBtn(12));
+//        slider.setBackground(Color.white);
+//
+//        slider.setPaintTrack(true);
+//        slider.setMajorTickSpacing(3);
+//        slider.addChangeListener(this);
 
         slider.addChangeListener(this);
         speeder.addChangeListener(this);
@@ -120,55 +122,6 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
         this.rows = 60;
         //this.columns = Integer.parseInt(c);
         this.columns = 80;
-
-        this.UI_FRAME();
-    }
-
-    public GameFrame(String r, String co){
-
-        counter = 0;
-        delay = 0;
-        label = new JLabel("");
-
-//        start = new MainButton("START");
-//        start.btn.addActionListener(this);
-//
-//        next = new MainButton("NEXT");
-//        next.btn.addActionListener(this);
-//
-//        reset = new MainButton("RESET");
-//        reset.btn.addActionListener(this);
-
-        label.setText(Integer.toString(this.counter));
-
-        slider = new JSlider(0,50,25);
-        speeder = new JSlider(0,50,25);
-
-        speeder.setPreferredSize(new Dimension(100,50));
-        speeder.setBackground(Color.yellow);
-
-
-
-        speeder.setPaintTrack(true);
-        speeder.setMajorTickSpacing(10);
-        speeder.addChangeListener(this);
-
-        slider.setPreferredSize(new Dimension(100,50));
-        slider.setBackground(Color.white);
-        slider.setPaintTicks(true);
-        slider.setMinorTickSpacing(2);
-
-        slider.setPaintTrack(true);
-        slider.setMajorTickSpacing(10);
-        slider.addChangeListener(this);
-
-        slider.addChangeListener(this);
-        speeder.addChangeListener(this);
-
-        this.rows = Integer.parseInt(r);
-        //this.rows = 100;
-        this.columns = Integer.parseInt(co);
-        //this.columns = 100;
 
         this.UI_FRAME();
     }
@@ -205,11 +158,12 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
 
         panel1.setBackground(Color.blue);
         //panel2.setBackground(Color.pink);
+        panel2.setLayout(new BorderLayout());
         panel3.setLayout(new BorderLayout());
         panel3.setBackground(Color.darkGray);
 
         panel1.setPreferredSize(new Dimension(100,100));
-        panel2.setPreferredSize(new Dimension(100,100));
+        panel2.setPreferredSize(new Dimension(100,110));
         panel3.setPreferredSize(new Dimension(100,100));
 
         this.add(panel1,BorderLayout.NORTH);
@@ -241,8 +195,8 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
 
 
 
-        panel2.add(speeder);
-        panel2.add(slider);
+        //panel2.add(speeder);
+        //panel2.add(slider);
 
         //Icon icon = new ImageIcon("start.png");
 //        Box b = Box.createHorizontalBox();
@@ -252,14 +206,36 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
 //        b.add(l);
 //        b.add(start.btn);
 //        panel2.add(b);
-        panel2.add(start.btn);
-        panel2.add(stop.btn);
-        panel2.add(reset.btn);
-        panel2.add(next.btn);
-        panel2.add(label);
+        JPanel btnPanel = new JPanel();
+        JPanel slidePanel = new JPanel();
+        JPanel midPanel = new JPanel();
+        //JPanel countPanel = new JPanel();
 
-        check = new JButton("CHECK");
-        panel2.add(check);
+        panel2.add(midPanel,BorderLayout.CENTER);
+        //panel2.add(countPanel,BorderLayout.EAST);
+
+        btnPanel.add(start.btn);
+        btnPanel.add(stop.btn);
+        btnPanel.add(reset.btn);
+        btnPanel.add(next.btn);
+        btnPanel.add(label);
+
+        //countPanel.add(label);
+
+        slidePanel.add(speeder);
+        slidePanel.add(slider);
+
+        midPanel.setLayout(new BorderLayout());
+        midPanel.add(btnPanel,BorderLayout.NORTH);
+        midPanel.add(slidePanel,BorderLayout.SOUTH);
+        //midPanel.add(label,BorderLayout.EAST);
+
+        //panel2.add(slidePanel,BorderLayout.SOUTH);
+
+        check = new JButton("i");
+        check.setFont(new Font("Consolas",Font.PLAIN,14));
+        //check.setHorizontalAlignment(panel2.getWidth());
+        panel2.add(check, BorderLayout.EAST);
         check.addActionListener(this);
 
         this.setVisible(true);
@@ -373,12 +349,13 @@ Thread GameLoop=new Thread(new Runnable() {
             GridPanel.repaint();
 
     }
-                counter++;
-                label.setText(Integer.toString(counter));
-        timer.start();
+                //counter++;
+                //label.setText(Integer.toString(counter));
+        //timer.start();
 
             }
         });
+timer.start();
 GameLoop.start();
 //       for (int l=0;l<5;l++)
 //        {
@@ -601,13 +578,17 @@ GameLoop.start();
         if(e.getSource()==start.btn){
             start.click=true;
             stop.click=false;
-                this.StartGame();
+            start.btn.setVisible(false);
+            stop.btn.setVisible(true);
+            this.StartGame();
 
 
         }
         if(e.getSource()==stop.btn){
             stop.click=true;
             start.click=false;
+            start.btn.setVisible(true);
+            stop.btn.setVisible(false);
             this.StopGame();
         }
         if(e.getSource()==next.btn){

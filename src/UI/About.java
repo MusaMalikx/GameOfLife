@@ -11,7 +11,7 @@ public class About extends JFrame {
 
     public About(){
         //this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(1150,650);
+        this.setSize(1150,500);
         //this.pack();
         //this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setLayout(new FlowLayout());
@@ -26,6 +26,7 @@ public class About extends JFrame {
         Member("/Members/musa.jpg");
         Member("/Members/maida.jpg");
         Member("/Members/suleiman.jpg");
+        Member("/Members/rafay.jpg");
     }
 
     public void Member(String str){
