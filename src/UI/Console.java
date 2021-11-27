@@ -1,5 +1,6 @@
 package UI;
 
+import java.awt.event.KeyEvent;
 import BL.GameLogic.GUI_implementation;
 import BL.GameLogic.Grid;
 import BL.GameLogic.Grid_Controller;
@@ -106,9 +107,7 @@ start=false;
             return;
         }
 
-        Thread GameLoop=new Thread(new Runnable() {
-            @Override
-            public void run() {
+
 next=true;
 
 
@@ -129,12 +128,12 @@ next=true;
                         // catching the exception
                         System.out.println(e);
                     }
-                    counter++;
-                }
 
-        });
-next=false;
+                    counter++;
+        next=false;
     }
+
+
     public void stop()
     {
         stop=true;
@@ -178,7 +177,7 @@ next=false;
             return;
 
         }
-
+        rows=x;
         System.out.print("Enter no of Columns to display (max 80) : ");
         int y=sc.nextInt();
         if(y>=80)
@@ -187,7 +186,7 @@ next=false;
             return;
 
         }
-        rows=x;
+
         columns=y;
     }
 
@@ -208,7 +207,7 @@ next=false;
             }
             System.out.print('\n');
         }
-        System.out.print("0. Select Cell    1. Start    2. Stop      3.Next     4. Reset     5. Delay    6. Zoom   7. Quit");
+        System.out.print("0. Select Cell    1. Start    2. Stop      3.Next     4. Reset     5. Delay :"+ delay+ "    6. Zoom    7. Quit");
     }
 
     public void GO() {
@@ -218,7 +217,7 @@ next=false;
             printGrid();
             Scanner sc= new Scanner(System.in); //System.in is a standard input stream.
 
-            System.out.print("Chose : ");
+            System.out.print("\nChose : ");
 
             int x= sc.nextInt();
             if(x==0)
@@ -227,10 +226,13 @@ next=false;
             }
             else if(x==1)
             {
-                start();
+
+                next();
+
             }
             else if(x==2)
             {
+                start=false;
                 stop();
             }
             else if(x==3)

@@ -7,8 +7,10 @@ public class GUI {
         {
             int a=0;
             a=10;
-            GUI_implementation obj=new GUI_implementation();
+          GUI_implementation obj=new GUI_implementation();
         GameFrame gf = new GameFrame(obj);
-        //TextFields tx = new TextFields();
+        TextFields tx = new TextFields();
+          //  Console c=new Console(obj);
+           // c.GO();
     }
 }
