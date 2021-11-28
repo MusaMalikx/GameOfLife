@@ -10,7 +10,7 @@ import  java.lang.String;
 
 public class File_Handling implements file{
     int fileNo;
-    File_Handling() {
+    public File_Handling() {
 
 
         Scanner sc = null;
@@ -38,7 +38,7 @@ public class File_Handling implements file{
 
         }
 
-        fileNo = 0;
+
        }
 
     public static String fileToString(String filePath) throws Exception{
@@ -52,9 +52,9 @@ public class File_Handling implements file{
         return sb.toString();
     }
 
-    public int[] viewState()throws Exception
+    public String[] viewState()throws Exception
     {
-        int arr[]=new int[10];
+        String arr[]=new String[10];
         Scanner sc = null;
 
         try {
@@ -62,12 +62,12 @@ public class File_Handling implements file{
             File file = new File("Data.txt"); // java.io.File
 
             sc = new Scanner(file);     // java.util.Scanner
-            int data;
+            String data;
 
             int i=0;
             while(sc.hasNextLine()) {
 
-                    data = Integer.parseInt(sc.next());
+                    data =(sc.next());
                     arr[i]=data;
                     i++;
 
@@ -91,7 +91,7 @@ public class File_Handling implements file{
         return arr;
 
     }
-    public void deleteState(int stateNum)throws Exception{
+    public void deleteState(String stateNum)throws Exception{
         try {
 
             File file = new File("Data.txt"); // java.io.File
@@ -103,9 +103,8 @@ public class File_Handling implements file{
             String result = fileToString(filePath);
 
             //Replacing the word with desired one
-            Integer l = stateNum;
-            String c = l.toString();
-            result = result.replaceAll("\\b"+c+"\\b", "");
+
+            result = result.replaceAll("\\b"+stateNum+"\\b", "");
             //Rewriting the contents of the file
             PrintWriter writer = new PrintWriter(new File(filePath));
             writer.append(result);
@@ -129,20 +128,18 @@ public class File_Handling implements file{
 
     }
 
-    public int[][] loadState(int n)throws Exception
+    public int[][] loadState(String n)throws Exception
     {
 
 
         int arr[][]=new int [60][80];
-        Integer l = n;
 
-        String c = l.toString();
 
         Scanner sc = null;
 
         try {
 
-            File file = new File(c+".txt"); // java.io.File
+            File file = new File(n+".txt"); // java.io.File
 
             sc = new Scanner(file);     // java.util.Scanner
             int data;
@@ -181,14 +178,14 @@ public class File_Handling implements file{
         return arr;
     }
 
-    public void saveState (int arr[][])throws Exception {
+    public void saveState (int arr[][],String name)throws Exception {
 
                 Integer l = fileNo;
                 String c = l.toString();
 
 
 
-                    FileWriter myWriter = new FileWriter(c+".txt");
+                    FileWriter myWriter = new FileWriter(name+".txt");
 
                     for (int i = 0; i < 60; i++) {
                         for (int j = 0; j < 80; j++) {
@@ -200,11 +197,19 @@ public class File_Handling implements file{
                     fileNo++;
                     FileWriter myWriter2 = new FileWriter("main.txt");
                     myWriter2.write(String.valueOf(fileNo));
-                    FileWriter myWriter3 = new FileWriter("main.txt");
-                    myWriter3.append(c+".txt\n");
+                    //FileWriter myWriter3 = new FileWriter("Data.txt");
+        String filePath = "Data.txt";
+        String result = fileToString(filePath);
+        result=result+" "+name;
+        PrintWriter writer = new PrintWriter(new File(filePath));
+        writer.append(result);
+        writer.flush();
+
+        writer.close();
+
                     myWriter.close();
                     myWriter2.close();
-                    myWriter3.close();
+
                 }
             }
 

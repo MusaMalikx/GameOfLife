@@ -1,9 +1,10 @@
 package BL.GameLogic;
 
 public interface file {
-    public int[] viewState()throws Exception;
-    public int[][] loadState(int n)throws Exception;
-    public void deleteState(int stateNum)throws Exception;
-    public void saveState(int arr[][])throws Exception;
+
+    public String[] viewState()throws Exception;
+    public int[][] loadState(String name)throws Exception;
+    public void deleteState(String name)throws Exception;
+    public void saveState(int arr[][],String name)throws Exception;
 
 }

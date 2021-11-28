@@ -1,4 +1,4 @@
-package GameLogic
+/*package GameLogic;
 
         public class StatesChanger{
         boolean isRunning;
@@ -21,4 +21,4 @@ package GameLogic
         }
 
         
-        }
+        }*/
