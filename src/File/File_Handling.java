@@ -151,7 +151,7 @@ public class File_Handling implements file{
                 for (int j=0; j<80;j++) {
 
                     data = Integer.parseInt(sc.next());
-                    System.out.print(data +" ");
+
                     arr[i][j]=data;
                 }
 

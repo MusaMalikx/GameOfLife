@@ -660,6 +660,25 @@ GameLoop.start();
                     if(e.getSource() == submit){
                         System.out.println("Submit");
                         System.out.println(input.getText());
+                        //save
+                        try {
+                            for (int i = 0; i < rows; i++) {
+                                for (int j = 0; j < columns; j++) {
+                                    if (c[i][j].click == false) {
+                                        arr[i][j] = 0;
+                                    } else {
+                                        arr[i][j] = 1;
+                                    }
+                                }
+                            }
+
+                            file_controller.saveState(arr, input.getText());
+                        }
+                        catch(Exception ex)
+                        {
+                            System.out.println(ex);
+                        }
+
                     }
                 }
             });
@@ -686,7 +705,7 @@ GameLoop.start();
 //            {
 //                System.out.println(ex);
 //            }
-//
+
 //
      }
 //        if(e.getSource() == submit){
@@ -732,6 +751,30 @@ GameLoop.start();
                         public void actionPerformed(ActionEvent e) {
                             System.out.println("Load Button");
                             System.out.println(lo.getText());
+                            //load
+                            try {
+                                arr = file_controller.loadState(lo.getText());
+                                for (int i = 0; i < rows; i++) {
+                                    for (int j =0; j < columns; j++) {
+                                        if(arr[i][j]==0)
+                                        {
+                                            c[i][j].click=false;
+                                            c[i][j].btn.setBackground(Color.white);
+                                        }
+                                        else if(arr[i][j]==1)
+                                        {
+                                            c[i][j].click=true;
+                                            c[i][j].btn.setBackground(Color.yellow);
+                                        }
+                                    }
+
+
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                System.out.println(ex);
+                            }
                         }
                     });
                     L.setVisible(true);
@@ -771,6 +814,15 @@ GameLoop.start();
                         public void actionPerformed(ActionEvent e) {
                             System.out.println("Delete Button");
                             System.out.println(de.getText());
+                            //delete
+                            try {
+                                 file_controller.deleteState(lo.getText());
+                            }
+                            catch (Exception ex)
+                            {
+                                System.out.println(ex);
+                                System.out.println("Delete fail");
+                            }
                         }
                     });
                     D.setVisible(true);
