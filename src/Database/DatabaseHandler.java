@@ -11,8 +11,9 @@
 //import javax.sql.StatementEvent;
 //import java.sql.*;
 //import java.sql.Types;
+//import BL.GameLogic.file;
 //
-//public class DatabaseHandler implements StorageInterface {
+//public class DatabaseHandler implements file {
 //
 //    private String user = "admin";
 //    private String password = "admin123";

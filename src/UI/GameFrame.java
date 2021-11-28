@@ -9,7 +9,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Objects;
-import 
+import BL.GameLogic.file;
+import File.File_Handling;
 
 public class GameFrame extends JFrame implements ChangeListener, ActionListener
 {
@@ -17,7 +18,7 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
     int counter,delay,sliderCount,speederCount;
     JLabel label;
     GUI_implementation implementation;
-
+    file file_controller;
     int [][]arr;
     int rows;
     int columns;
@@ -34,7 +35,7 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
         }
     });
 
-    public GameFrame(GUI_implementation obj){
+    public GameFrame(GUI_implementation obj,file obj2){
         arr=new int[60][80];
         implementation= new GUI_implementation();
         implementation= obj;
@@ -42,6 +43,8 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
         speederCount = 0;
         counter = 0;
         delay = 0;
+        file_controller=new File_Handling();
+        file_controller=obj2;
         label = new JLabel("");
         label.setFont(new Font("Consolas",Font.PLAIN,14));
         //label.setHorizontalTextPosition(JLabel.RIGHT);
@@ -623,6 +626,10 @@ GameLoop.start();
         }
         if(e.getSource() == save.btn){
 
+            TextFields tx = new TextFields();
+
+
+            file_controller.saveState(arr,s);
         }
         if(e.getSource()==view.btn){
             View v = new View();
