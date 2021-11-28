@@ -18,7 +18,8 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
     MainButton start,reset,next,stop,save,view, load ,delete;
     int counter,delay,sliderCount,speederCount;
     JLabel label;
-    JFrame F;
+    JFrame F,I,L,D;
+    JTextField input,lo,de;
     GUI_implementation implementation;
     file file_controller;
     int [][]arr;
@@ -27,7 +28,7 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
     JSlider slider,speeder;
     JPanel GridPanel;
     Cell[][] c;
-    JButton check;
+    JButton check,submit,li,di;
 
     Timer timer = new Timer(500, new ActionListener() {
         @Override
@@ -41,6 +42,11 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
         arr=new int[60][80];
         implementation= new GUI_implementation();
         implementation= obj;
+        //submit= new JButton();
+        //input = new JTextField();
+        I = new JFrame();
+        L = new JFrame();
+        D = new JFrame();
         sliderCount = 0;
         speederCount = 0;
         counter = 0;
@@ -81,11 +87,11 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
         view = new MainButton("VIEW",new Color(100, 201, 207),Color.darkGray);
         view.btn.addActionListener(this);
         load = new MainButton("LOAD",new Color(255, 165, 165),Color.darkGray);
-        this.load.btn.addActionListener(this);
+        //this.load.btn.addActionListener(this);
         delete = new MainButton("DELETE",new Color(236, 70, 70),Color.white);
-        this.delete.btn.addActionListener(this);
-        this.add(load.btn);
-        this.add(delete.btn);
+        //this.delete.btn.addActionListener(this);
+        //this.add(load.btn);
+        //this.add(delete.btn);
 
         label.setText(Integer.toString(this.counter));
         //label.setIcon(new ImageIcon(new ImageIcon("F:\\Project\\GameOfLife\\src\\Images\\start.png").getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT)));
@@ -170,8 +176,8 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
         JPanel centerPanel = new JPanel();
         centerPanel.add(this.save.btn);
         centerPanel.add(this.view.btn);
-        centerPanel.add(this.load.btn);
-        centerPanel.add(this.delete.btn);
+        //centerPanel.add(this.load.btn);
+        //centerPanel.add(this.delete.btn);
 
         Jrpanel1.setPreferredSize(new Dimension(13,13));
         Jrpanel2.setPreferredSize(new Dimension(13,13));
@@ -636,9 +642,33 @@ GameLoop.start();
         }
         if(e.getSource() == save.btn){
 
+            I.setLayout(new FlowLayout());
+            I.setTitle("Save State");
+            I.setSize(new Dimension(500,90));
+            this.submit = new JButton("Submit");
+            this.input = new JTextField();
+            this.input.setPreferredSize(new Dimension(250,40));
+            this.input.setFont(new Font("Consolas",Font.PLAIN,14));
+            this.input.setBackground(Color.black);
+            this.input.setCaretColor(Color.white);
+            this.input.setForeground(Color.red);
+            // this.in.setText("Enter the State Name");
+            I.add(this.submit);
+            this.submit.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if(e.getSource() == submit){
+                        System.out.println("Submit");
+                        System.out.println(input.getText());
+                    }
+                }
+            });
+            I.add(this.input);
+            this.input.addActionListener(this);
+            I.setVisible(true);
 
-      Input l = new Input();
-            System.out.println(l.getTextFeild());
+      //Input l = new Input();
+            //System.out.println(l.getTextFeild());
 //            try {
 //                for (int i = 0; i < rows; i++) {
 //                    for (int j = 0; j < columns; j++) {
@@ -659,6 +689,9 @@ GameLoop.start();
 //
 //
      }
+//        if(e.getSource() == submit){
+//            System.out.println(input.getText());
+//        }
         if(e.getSource()==view.btn){
 
             F.setSize(1150,500);
@@ -666,7 +699,85 @@ GameLoop.start();
             //this.setExtendedState(JFrame.MAXIMIZED_BOTH);
             F.setLayout(new FlowLayout());
             F.setTitle("View State");
-            F.setVisible(true);
+            F.add(this.load.btn);
+            load.btn.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    System.out.println("Load");
+
+                    //--------------------------------
+                    L.setLayout(new FlowLayout());
+                    L.setTitle("Load State");
+                    L.setSize(new Dimension(500,90));
+                    li = new JButton("Load");
+                    lo = new JTextField();
+                    lo.setPreferredSize(new Dimension(250,40));
+                    lo.setFont(new Font("Consolas",Font.PLAIN,14));
+                    lo.setBackground(Color.black);
+                    lo.setCaretColor(Color.white);
+                    lo.setForeground(Color.red);
+                    // this.in.setText("Enter the State Name");
+                    L.add(lo);
+                    //Load TextField
+                    lo.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            System.out.println("Load TextField");
+                        }
+                    });
+                    L.add(li);
+                    //Load Button
+                    li.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            System.out.println("Load Button");
+                            System.out.println(lo.getText());
+                        }
+                    });
+                    L.setVisible(true);
+                    //--------------------------------
+                }
+            });
+            F.add(this.delete.btn);
+            delete.btn.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    System.out.println("Delete");
+
+                    //--------------------------------
+                    D.setLayout(new FlowLayout());
+                    D.setTitle("Delete State");
+                    D.setSize(new Dimension(500,90));
+                    di = new JButton("Delete");
+                    de = new JTextField();
+                    de.setPreferredSize(new Dimension(250,40));
+                    de.setFont(new Font("Consolas",Font.PLAIN,14));
+                    de.setBackground(Color.black);
+                    de.setCaretColor(Color.white);
+                    de.setForeground(Color.red);
+                    // this.in.setText("Enter the State Name");
+                    D.add(de);
+                    //Load TextField
+                    de.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            System.out.println("Delete TextField");
+                        }
+                    });
+                    D.add(di);
+                    //Load Button
+                    di.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            System.out.println("Delete Button");
+                            System.out.println(de.getText());
+                        }
+                    });
+                    D.setVisible(true);
+                    //--------------------------------
+                }
+            });
+
             JLabel StateNames[]=new JLabel[10];
             String arr2[]=new String[10];
 
@@ -688,15 +799,9 @@ GameLoop.start();
             {
                 System.out.println(ex);
             }
+            F.setVisible(true);
         }
-        if(e.getSource()==load.btn)
-        {
-            try{}
-            catch(Exception ex)
-            {
-                System.out.println(ex);
-            }
-        }
+
 
     }
 }
