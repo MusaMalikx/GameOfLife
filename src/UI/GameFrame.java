@@ -42,9 +42,9 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
         arr=new int[60][80];
         implementation= new GUI_implementation();
         implementation= obj;
-        I = new JFrame();
-        L = new JFrame();
-        D = new JFrame();
+//        I = new JFrame();
+//        L = new JFrame();
+//        D = new JFrame();
         sliderCount = 0;
         speederCount = 0;
         counter = 0;
@@ -59,7 +59,7 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
         label = new JLabel("");
         label.setFont(new Font("Consolas",Font.PLAIN,14));
 
-        F=new JFrame();
+        //F=new JFrame();
 
         ImageIcon playIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/Images/start.png")));//.getImage().getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH));
         start = new MainButton("START",new Color(23, 215, 160),Color.darkGray);
@@ -164,10 +164,17 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
         this.add(panel2,BorderLayout.SOUTH);
         this.add(panel3,BorderLayout.CENTER);
 
-        JLabel l = new JLabel();
-        l.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource("/Images/top.PNG"))));
-
-        panel1.add(l);
+        JLabel l1 = new JLabel();
+        JLabel l2 = new JLabel();
+        //l.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource("/Images/top.PNG"))));
+        l1.setText("John Conway's");
+        l1.setFont(new Font("Consolas",Font.ITALIC,25));
+        l1.setForeground(Color.white);
+        panel1.add(l1);
+        l2.setText("Game of Life");
+        l2.setFont(new Font("Century",Font.PLAIN,65));
+        l2.setForeground(Color.white);
+        panel1.add(l2);
 
         panel3.add(Srpanel1,BorderLayout.NORTH);
         panel3.add(Jrpanel2,BorderLayout.WEST);
@@ -197,7 +204,23 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
 
         //countPanel.add(label);
 
+        JLabel la1 = new JLabel();
+        JLabel la2 = new JLabel();
+
+        JLabel la3 = new JLabel();
+
+        la1.setText("Speed");
+        la1.setFont(new Font("Consolas",Font.PLAIN,15));
+        la2.setText("Zoom");
+        la2.setFont(new Font("Consolas",Font.PLAIN,15));
+        la3.setText("  ");
+//
+//        la1.add(speeder);
+//        la2.add(slider);
+        slidePanel.add(la1);
         slidePanel.add(speeder);
+        slidePanel.add(la3);
+        slidePanel.add(la2);
         slidePanel.add(slider);
 
         midPanel.setLayout(new BorderLayout());
@@ -262,7 +285,6 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
             System.out.println('\n');
         }
     }
-
 
     public void StartGame() {
 
@@ -393,8 +415,10 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
         timer.stop();
         this.counter = 0;
         label.setText(Integer.toString(counter));
-        start.click = false;
-        start.btn.setText("START");
+        start.click=false;
+        stop.click=true;
+        start.btn.setVisible(true);
+        stop.btn.setVisible(false);
 
         slider.setValue(7);
         speeder.setValue(13);
@@ -523,11 +547,17 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
             About a = new About();
         }
         if(e.getSource() == save.btn){
-
+            I = new JFrame();
             I.setLayout(new FlowLayout());
             I.setTitle("Save State");
             I.setSize(new Dimension(500,90));
-            this.submit = new JButton("Submit");
+            this.submit = new JButton("SAVE");
+            this.submit.setBackground(new Color(17, 101, 48));
+            this.submit.setForeground(Color.white);
+            //this.submit.setBorder(new RoundBtn(2));
+            //this.submit.setSize(30,30);
+            this.submit.setFont(new Font("Consolas",Font.PLAIN,18));
+            //this.submit.setPreferredSize(new Dimension(100,40));
             JTextField input = new JTextField();
             input.setPreferredSize(new Dimension(250,40));
             input.setFont(new Font("Consolas",Font.PLAIN,14));
@@ -562,13 +592,15 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
                             System.out.println(ex);
                         }
 
+                        I.dispose();
+
                     }
                 }
             });
             I.setVisible(true);
      }
         if(e.getSource()==view.btn){
-
+            F = new JFrame();
             F.setSize(450,500);
             F.setTitle("View State");
 
@@ -599,11 +631,14 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
                     System.out.println("Load");
 
                     //--------------------------------
+                    L=new JFrame();
                     L.setLayout(new FlowLayout());
                     L.setTitle("Load State");
                     L.setSize(new Dimension(500,90));
-                    li = new JButton("Load");
-
+                    li = new JButton("LOAD");
+                    li.setBackground(new Color(143, 193, 212));
+                    li.setPreferredSize(new Dimension(100,40));
+                    li.setFont(new Font("Consolas",Font.PLAIN,18));
                     JTextField lo = new JTextField();
                     lo.setPreferredSize(new Dimension(250,40));
                     lo.setFont(new Font("Consolas",Font.PLAIN,14));
@@ -651,6 +686,9 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
                             {
                                 System.out.println(ex);
                             }
+
+                            L.dispose();
+                            F.dispose();
                         }
                     });
                     L.setVisible(true);
@@ -666,10 +704,14 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
                     System.out.println("Delete");
 
                     //--------------------------------
+                    D = new JFrame();
                     D.setLayout(new FlowLayout());
                     D.setTitle("Delete State");
                     D.setSize(new Dimension(500,90));
-                    di = new JButton("Delete");
+                    di = new JButton("DELETE");
+                    di.setBackground(new Color(255, 107, 107));
+                    di.setPreferredSize(new Dimension(100,40));
+                    di.setFont(new Font("Consolas",Font.PLAIN,18));
                     JTextField de = new JTextField();
                     de.setPreferredSize(new Dimension(250,40));
                     de.setFont(new Font("Consolas",Font.PLAIN,14));
@@ -701,6 +743,8 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
                                 System.out.println(ex);
                                 System.out.println("Delete fail");
                             }
+                            F.dispose();
+                            D.dispose();
                         }
                     });
                     D.setVisible(true);
@@ -733,7 +777,6 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
 
             F.setVisible(true);
         }
-
 
     }
 }
