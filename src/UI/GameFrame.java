@@ -620,7 +620,7 @@ GameLoop.start();
             About a = new About();
         }
         if(e.getSource() == save.btn){
-
+            Input i = new Input();
         }
         if(e.getSource()==view.btn){
             View v = new View();
