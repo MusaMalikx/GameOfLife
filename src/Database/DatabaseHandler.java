@@ -1,7 +1,7 @@
-package bin.Storage.DatabaseHandler;
+package Database;
 
-import bin.BL.Grid.*;
-import bin.Interfaces.StorageInterface.*;
+import BL.GameLogic.Grid;
+
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -18,7 +18,7 @@ public class DatabaseHandler implements file {
     private String user = "admin";
     private String password = "admin123";
 
-    public String[] View_States() {
+    public String[] viewState() {
 
         ArrayList<String> StatesData = new ArrayList<String>();
 
@@ -58,8 +58,9 @@ public class DatabaseHandler implements file {
         return output;
     }
 
-    public int[][] Load_States(String GridName) {
+    public int[][] loadState(String GridName) {
 
+        int cells[][]=new int[60][80];
         try {
 
             String url = "jdbc:mysql://localhost/GameOfLife";                   // connection string, GameOfLife is the name of the database
@@ -72,7 +73,7 @@ public class DatabaseHandler implements file {
             ResultSet getGridDimension = one.executeQuery(strloadState);
 
             int X = 0, Y = 0;
-            int cells[60][80];
+
 
             getGridDimension.next();
 
@@ -82,13 +83,22 @@ public class DatabaseHandler implements file {
 
             Grid grid = new Grid(X, Y);          //make new Grid with data
 
-            ResultSet getGridStates = one.executeQuery(query);
+            ResultSet getGridStates = one.executeQuery(strloadState);
 
             //Get states of available cells stored in db
             while (getGridStates.next())
             {
                 grid.setCellStatus(getGridStates.getInt(1), getGridStates.getInt(2), getGridStates.getBoolean(3));
-                cells[getGridStates.getInt(1)][getGridStates.getInt(2)] = getGridStates.getBoolean(3);
+               int value;
+                if(getGridStates.getBoolean(3)==true)
+                {
+                value=1;
+                }
+                else
+                {
+                    value=0;
+                }
+                cells[getGridStates.getInt(1)][getGridStates.getInt(2)] = value;
             }
 
             con.close();        //close the connection
@@ -98,11 +108,12 @@ public class DatabaseHandler implements file {
             System.out.println(e);
         }
 
+
         return cells;   //return 2d array
 
     }
 
-    public void Save_States(int arr[][], String GridName) {
+    public void saveState(int arr[][], String GridName) {
 
         try {
 
@@ -135,7 +146,7 @@ public class DatabaseHandler implements file {
         }
     }
 
-    public void Delete_States(String Gridname) {
+    public void deleteState(String Gridname) {
         try {
 
             String url = "jdbc:mysql://localhost/GameOfLife"; // connection string here; GameOfLife is the name of the database

@@ -569,6 +569,7 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
      }
         if(e.getSource()==view.btn){
 
+            F=new JFrame();
             F.setSize(450,500);
             F.setTitle("View State");
 
@@ -720,9 +721,9 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
                         break;
                     }
                     System.out.println(arr2[i] + "\n");
-
+                    StateNames[i]=new JLabel();
                     StateNames[i].setText(arr2[i]);
-                    StateNames[i].setFont(new Font("Consolas",Font.PLAIN,20));
+                  //  StateNames[i].setFont(new Font("Consolas",Font.PLAIN,20));
                     panel2.add(StateNames[i]);
                 }
             }

@@ -78,7 +78,7 @@ public class File_Handling implements file{
 
             //Replacing the word with desired one
 
-            result = result.replaceAll("\\b"+stateNum+"\\b", "");
+            result = result.replaceAll("\\b"+" "+stateNum+"\\b", "");
             //Rewriting the contents of the file
             PrintWriter writer = new PrintWriter(new File(filePath));
             writer.append(result);
