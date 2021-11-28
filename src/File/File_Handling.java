@@ -9,35 +9,8 @@ import java.util.*;
 import  java.lang.String;
 
 public class File_Handling implements file{
-    int fileNo;
+
     public File_Handling() {
-
-
-        Scanner sc = null;
-
-        try {
-
-            File file = new File("main.txt"); // java.io.File
-
-            sc = new Scanner(file);     // java.util.Scanner
-            int data;
-            data = Integer.parseInt(sc.next());
-            fileNo=data;
-        }
-        catch(FileNotFoundException e)
-
-        {
-
-            e.printStackTrace();
-
-        }
-
-        finally {
-
-            if (sc != null) sc.close();
-
-        }
-
 
        }
 
@@ -86,6 +59,7 @@ public class File_Handling implements file{
         finally {
 
             if (sc != null) sc.close();
+
 
         }
         return arr;
@@ -180,8 +154,7 @@ public class File_Handling implements file{
 
     public void saveState (int arr[][],String name)throws Exception {
 
-                Integer l = fileNo;
-                String c = l.toString();
+
 
 
 
@@ -194,9 +167,8 @@ public class File_Handling implements file{
                         }
                         myWriter.write('\n');
                     }
-                    fileNo++;
-                    FileWriter myWriter2 = new FileWriter("main.txt");
-                    myWriter2.write(String.valueOf(fileNo));
+
+
                     //FileWriter myWriter3 = new FileWriter("Data.txt");
         String filePath = "Data.txt";
         String result = fileToString(filePath);
@@ -208,7 +180,7 @@ public class File_Handling implements file{
         writer.close();
 
                     myWriter.close();
-                    myWriter2.close();
+
 
                 }
             }

@@ -16,7 +16,7 @@ public class GUI {
            Console c=new Console(obj,obj2);
             c.GO();
 
-       // GameFrame gf = new GameFrame(obj,obj2);
+        //GameFrame gf = new GameFrame(obj,obj2);
         //TextFields tx = new TextFields();
           //  Console c=new Console(obj);
            // c.GO();

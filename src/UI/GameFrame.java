@@ -19,7 +19,7 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
     int counter,delay,sliderCount,speederCount;
     JLabel label;
     JFrame F,I,L,D;
-    JTextField input,lo,de;
+   // JTextField input,de;
     GUI_implementation implementation;
     file file_controller;
     int [][]arr;
@@ -29,6 +29,7 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
     JPanel GridPanel;
     Cell[][] c;
     JButton check,submit,li,di;
+    JLabel StateNames[];
 
     Timer timer = new Timer(500, new ActionListener() {
         @Override
@@ -53,6 +54,11 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
         delay = 0;
         file_controller=new File_Handling();
         file_controller=obj2;
+         StateNames=new JLabel[10];
+        for(int i=0;i<10;i++)
+        {
+            StateNames[i]=new JLabel();
+        }
         label = new JLabel("");
         label.setFont(new Font("Consolas",Font.PLAIN,14));
         //label.setHorizontalTextPosition(JLabel.RIGHT);
@@ -376,7 +382,7 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
                 }
             }
             try {
-                Thread.sleep(speeder.getValue()*200);
+                Thread.sleep(delay);
             }catch (Exception e) {
 
             // catching the exception
@@ -488,7 +494,7 @@ GameLoop.start();
                         }
                     }
                     try {
-                        Thread.sleep(speeder.getValue()*500);
+                        Thread.sleep(delay);
                     }catch (Exception e) {
 
                         // catching the exception
@@ -646,12 +652,12 @@ GameLoop.start();
             I.setTitle("Save State");
             I.setSize(new Dimension(500,90));
             this.submit = new JButton("Submit");
-            this.input = new JTextField();
-            this.input.setPreferredSize(new Dimension(250,40));
-            this.input.setFont(new Font("Consolas",Font.PLAIN,14));
-            this.input.setBackground(Color.black);
-            this.input.setCaretColor(Color.white);
-            this.input.setForeground(Color.red);
+            JTextField input = new JTextField();
+            input.setPreferredSize(new Dimension(250,40));
+            input.setFont(new Font("Consolas",Font.PLAIN,14));
+            input.setBackground(Color.black);
+            input.setCaretColor(Color.white);
+            input.setForeground(Color.red);
             // this.in.setText("Enter the State Name");
             I.add(this.submit);
             this.submit.addActionListener(new ActionListener() {
@@ -682,8 +688,8 @@ GameLoop.start();
                     }
                 }
             });
-            I.add(this.input);
-            this.input.addActionListener(this);
+            I.add(input);
+            input.addActionListener(this);
             I.setVisible(true);
 
       //Input l = new Input();
@@ -729,7 +735,8 @@ GameLoop.start();
                     L.setTitle("Load State");
                     L.setSize(new Dimension(500,90));
                     li = new JButton("Load");
-                    lo = new JTextField();
+
+                    JTextField lo = new JTextField();
                     lo.setPreferredSize(new Dimension(250,40));
                     lo.setFont(new Font("Consolas",Font.PLAIN,14));
                     lo.setBackground(Color.black);
@@ -749,6 +756,7 @@ GameLoop.start();
                     li.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
+
                             System.out.println("Load Button");
                             System.out.println(lo.getText());
                             //load
@@ -792,7 +800,7 @@ GameLoop.start();
                     D.setTitle("Delete State");
                     D.setSize(new Dimension(500,90));
                     di = new JButton("Delete");
-                    de = new JTextField();
+                    JTextField de = new JTextField();
                     de.setPreferredSize(new Dimension(250,40));
                     de.setFont(new Font("Consolas",Font.PLAIN,14));
                     de.setBackground(Color.black);
@@ -816,7 +824,7 @@ GameLoop.start();
                             System.out.println(de.getText());
                             //delete
                             try {
-                                 file_controller.deleteState(lo.getText());
+                                 file_controller.deleteState(de.getText());
                             }
                             catch (Exception ex)
                             {
@@ -830,7 +838,7 @@ GameLoop.start();
                 }
             });
 
-            JLabel StateNames[]=new JLabel[10];
+
             String arr2[]=new String[10];
 
             try {
@@ -842,7 +850,7 @@ GameLoop.start();
                         break;
                     }
                     System.out.println(arr2[i] + "\n");
-                    StateNames[i]=new JLabel();
+
                     StateNames[i].setText(arr2[i]);
                     F.add(StateNames[i]);
                 }
