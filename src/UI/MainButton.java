@@ -19,7 +19,7 @@ public class MainButton {
 //        btn.setIcon(i);
 
         btn.setSize(50,40);
-        this.btn.setPreferredSize(new Dimension(90,40));
+        this.btn.setPreferredSize(new Dimension(100,40));
         //this.btn.setBorder(new RoundBtn(8));
         this.btn.setFont(new Font("Consolas",Font.PLAIN,18));
         this.btn.setBackground(Color.cyan);
@@ -37,7 +37,7 @@ public class MainButton {
 //        btn.setIcon(i);
 
         //this.btn.setBorder(new RoundBtn(8));
-        this.btn.setPreferredSize(new Dimension(90,40));
+        this.btn.setPreferredSize(new Dimension(100,40));
         this.btn.setBackground(c);
         this.btn.setForeground(f);
         this.btn.setFont(new Font("Consolas",Font.PLAIN,18));
