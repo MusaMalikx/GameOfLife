@@ -292,10 +292,10 @@ next=true;
         arr2=file_controller.viewState();
         for(int i=0;i<10;i++)
         {
-            //if(arr2[i]==0)
-            //{
-              //  break;
-            //}
+            if(arr2[i]==null)
+            {
+                break;
+            }
             System.out.println(arr2[i]+"\n");
         }
     }

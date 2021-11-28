@@ -11,12 +11,14 @@ import java.awt.event.ActionListener;
 import java.util.Objects;
 import BL.GameLogic.file;
 import File.File_Handling;
+import java.lang.Exception;
 
 public class GameFrame extends JFrame implements ChangeListener, ActionListener
 {
-    MainButton start,reset,next,stop,view,save;
+    MainButton start,reset,next,stop,save,view, load ,delete;
     int counter,delay,sliderCount,speederCount;
     JLabel label;
+    JFrame F;
     GUI_implementation implementation;
     file file_controller;
     int [][]arr;
@@ -49,7 +51,7 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
         label.setFont(new Font("Consolas",Font.PLAIN,14));
         //label.setHorizontalTextPosition(JLabel.RIGHT);
         //BufferedImage image = ImageIO.read(getClass().getResource("../Images/start.png"));
-
+        F=new JFrame();
         ImageIcon playIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/Images/start.png")));//.getImage().getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH));
 
 //        Image img = playIcon.getImage();
@@ -78,6 +80,12 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
 
         view = new MainButton("VIEW",new Color(100, 201, 207),Color.darkGray);
         view.btn.addActionListener(this);
+        load = new MainButton("LOAD",new Color(255, 165, 165),Color.darkGray);
+        this.load.btn.addActionListener(this);
+        delete = new MainButton("DELETE",new Color(236, 70, 70),Color.white);
+        this.delete.btn.addActionListener(this);
+        this.add(load.btn);
+        this.add(delete.btn);
 
         label.setText(Integer.toString(this.counter));
         //label.setIcon(new ImageIcon(new ImageIcon("F:\\Project\\GameOfLife\\src\\Images\\start.png").getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT)));
@@ -162,6 +170,8 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
         JPanel centerPanel = new JPanel();
         centerPanel.add(this.save.btn);
         centerPanel.add(this.view.btn);
+        centerPanel.add(this.load.btn);
+        centerPanel.add(this.delete.btn);
 
         Jrpanel1.setPreferredSize(new Dimension(13,13));
         Jrpanel2.setPreferredSize(new Dimension(13,13));
@@ -626,13 +636,67 @@ GameLoop.start();
         }
         if(e.getSource() == save.btn){
 
-            TextFields tx = new TextFields();
 
-
-            file_controller.saveState(arr,s);
-        }
+      Input l = new Input();
+            System.out.println(l.getTextFeild());
+//            try {
+//                for (int i = 0; i < rows; i++) {
+//                    for (int j = 0; j < columns; j++) {
+//                        if (c[i][j].click == false) {
+//                            arr[i][j] = 0;
+//                        } else {
+//                            arr[i][j] = 1;
+//                        }
+//                    }
+//                }
+//
+//                file_controller.saveState(arr, l.in.getText());
+//            }
+//            catch(Exception ex)
+//            {
+//                System.out.println(ex);
+//            }
+//
+//
+     }
         if(e.getSource()==view.btn){
-            View v = new View();
+
+            F.setSize(1150,500);
+            //this.pack();
+            //this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+            F.setLayout(new FlowLayout());
+            F.setTitle("View State");
+            F.setVisible(true);
+            JLabel StateNames[]=new JLabel[10];
+            String arr2[]=new String[10];
+
+            try {
+
+
+                arr2 = file_controller.viewState();
+                for (int i = 0; i < 10; i++) {
+                    if (arr2[i] == null) {
+                        break;
+                    }
+                    System.out.println(arr2[i] + "\n");
+                    StateNames[i]=new JLabel();
+                    StateNames[i].setText(arr2[i]);
+                    F.add(StateNames[i]);
+                }
+            }
+            catch (Exception ex)
+            {
+                System.out.println(ex);
+            }
         }
+        if(e.getSource()==load.btn)
+        {
+            try{}
+            catch(Exception ex)
+            {
+                System.out.println(ex);
+            }
+        }
+
     }
 }
