@@ -6,6 +6,7 @@ import BL.GameLogic.file;
 import BL.GameLogic.Grid;
 import BL.GameLogic.Grid_Controller;
 import BL.GameLogic.Rules;
+import File.File_Handling;
 
 import java.util.Scanner;
 
@@ -16,8 +17,9 @@ public class Console {
     boolean start,reset,next,stop;
     int counter,delay,sliderCount,speederCount;
     GUI_implementation implementation;
+    file file_controller;
 
-    public Console(GUI_implementation obj)
+    public Console(GUI_implementation obj,file obj2)
     {
         start=reset=next=stop=false;
         sliderCount = 0;
@@ -35,6 +37,7 @@ public class Console {
 
         implementation= new GUI_implementation();
         implementation= obj;
+        file_controller=new File_Handling();
         rows=20;
         columns=40;
     }
@@ -208,10 +211,10 @@ next=true;
             }
             System.out.print('\n');
         }
-        System.out.print("0. Select Cell    1. Start    2. Stop      3.Next     4. Reset     5. Delay :"+ delay+ "    6. Zoom    7. Quit");
+        System.out.print("0. Select Cell    1. Start    2. Stop      3.Next     4. Reset     5. Delay :"+ delay+ "    6. Zoom    7. Quit\n8. Save State     9. View State   10. Delete State    11. Load State");
     }
 
-    public void GO() {
+    public void GO() throws Exception{
 
         while(true)
         {
@@ -256,8 +259,63 @@ next=true;
             {
                 break;
             }
+            else if(x==8)
+            {
+                saveState();
+            }
+            else if(x==9)
+            {
+                viewState();
+            }
+            else if(x==10)
+            {
+               deleteState();
+            }
+            else if(x==11)
+            {
+                loadState();
+            }
         }
     }
+    public void saveState()throws Exception
+    {
+
+        Scanner sc= new Scanner(System.in); //System.in is a standard input stream.
+
+        System.out.print("\nEnter State name: ");
+        String x= sc.next();
+        file_controller.saveState(arr,x);
+    }
+    public void viewState()throws Exception
+    {
+        String arr2[]=new String[10];
+        arr2=file_controller.viewState();
+        for(int i=0;i<10;i++)
+        {
+            //if(arr2[i]==0)
+            //{
+              //  break;
+            //}
+            System.out.println(arr2[i]+"\n");
+        }
+    }
+    public void deleteState()throws Exception
+    {
+        Scanner sc= new Scanner(System.in); //System.in is a standard input stream.
+
+        System.out.print("\nEnter State to Delete: ");
+        String x= sc.next();
+        file_controller.deleteState(x);
+    }
+    public void loadState()throws Exception
+    {
+        Scanner sc= new Scanner(System.in); //System.in is a standard input stream.
+
+        System.out.print("\nEnter State to load: ");
+        String x= sc.next();
+       arr= file_controller.loadState (x);
+    }
+
 
 
 }
