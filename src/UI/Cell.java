@@ -7,10 +7,10 @@ import java.awt.event.ActionListener;
 
 public class Cell extends JFrame implements ActionListener {
 
-    boolean click;
-    JButton btn;
-    int x;
-    int y;
+    private boolean click;
+    private JButton btn;
+    private int x;
+    private int y;
 
     public Cell(int x, int y){
         btn = new JButton("");
@@ -25,6 +25,21 @@ public class Cell extends JFrame implements ActionListener {
         return this.btn;
     }
 
+    public boolean getClick(){
+        return this.click;
+    }
+
+    public void setClick(boolean b){
+        this.click = b;
+    }
+
+    public int getX() {
+        return this.x;
+    }
+
+    public int getY() {
+        return this.y;
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {

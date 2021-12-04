@@ -15,20 +15,20 @@ import java.lang.Exception;
 
 public class GameFrame extends JFrame implements ChangeListener, ActionListener
 {
-    MainButton start,reset,next,stop,save,view, load ,delete;
-    int counter,delay,sliderCount,speederCount;
-    JLabel label;
-    JFrame F,I,L,D;
-    GUI_implementation implementation;
-    file file_controller;
-    int [][]arr;
-    int rows;
-    int columns;
-    JSlider slider,speeder;
-    JPanel GridPanel;
-    Cell[][] c;
-    JButton check,submit,li,di;
-    JLabel StateNames[];
+    private MainButton start,reset,next,stop,save,view, load ,delete;
+    private int counter,delay,sliderCount,speederCount;
+    private JLabel label;
+    //private JFrame F,I,L,D;
+    private GUI_implementation implementation;
+    private file file_controller;
+    private int [][]arr;
+    private int rows;
+    private int columns;
+    private JSlider slider,speeder;
+    private JPanel GridPanel;
+    private Cell[][] c;
+    private JButton check,submit,li,di;
+    private JLabel StateNames[];
 
     Timer timer = new Timer(500, new ActionListener() {
         @Override
@@ -63,26 +63,26 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
 
         ImageIcon playIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/Images/start.png")));//.getImage().getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH));
         start = new MainButton("START",new Color(23, 215, 160),Color.darkGray);
-        start.btn.addActionListener(this);
+        start.getBtn().addActionListener(this);
 
         ImageIcon stopIcon = new ImageIcon(getClass().getResource("/Images/stop.png"));//new ImageIcon("F:\\Project\\GameOfLife\\src\\Images\\next.png").getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT));
         stop = new MainButton("STOP",new Color(255, 81, 81),Color.darkGray);
-        stop.btn.setVisible(false);
-        stop.btn.addActionListener(this);
+        stop.getBtn().setVisible(false);
+        stop.getBtn().addActionListener(this);
 
         ImageIcon nextIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/Images/next.png")));//new ImageIcon("F:\\Project\\GameOfLife\\src\\Images\\next.png").getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT));
         next = new MainButton("NEXT");
-        next.btn.addActionListener(this);
+        next.getBtn().addActionListener(this);
 
         ImageIcon resetIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/Images/reset.png")));
         reset = new MainButton("RESET");
-        reset.btn.addActionListener(this);
+        reset.getBtn().addActionListener(this);
 
         save = new MainButton("SAVE",new Color(100, 201, 207),Color.darkGray);
-        save.btn.addActionListener(this);
+        save.getBtn().addActionListener(this);
 
         view = new MainButton("VIEW",new Color(100, 201, 207),Color.darkGray);
-        view.btn.addActionListener(this);
+        view.getBtn().addActionListener(this);
         load = new MainButton("LOAD",new Color(255, 165, 165),Color.darkGray);
 
         delete = new MainButton("DELETE",new Color(236, 70, 70),Color.white);
@@ -133,8 +133,8 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
         Srpanel1.setLayout(new BorderLayout());
 
         JPanel centerPanel = new JPanel();
-        centerPanel.add(this.save.btn);
-        centerPanel.add(this.view.btn);
+        centerPanel.add(this.save.getBtn());
+        centerPanel.add(this.view.getBtn());
 
         Jrpanel1.setPreferredSize(new Dimension(13,13));
         Jrpanel2.setPreferredSize(new Dimension(13,13));
@@ -196,10 +196,10 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
 
         panel2.add(midPanel,BorderLayout.CENTER);
 
-        btnPanel.add(start.btn);
-        btnPanel.add(stop.btn);
-        btnPanel.add(reset.btn);
-        btnPanel.add(next.btn);
+        btnPanel.add(start.getBtn());
+        btnPanel.add(stop.getBtn());
+        btnPanel.add(reset.getBtn());
+        btnPanel.add(next.getBtn());
         btnPanel.add(label);
 
         //countPanel.add(label);
@@ -280,7 +280,7 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
     public void PrintCellLocation(){
         for (int i = 0; i < this.rows; i++) {
             for (int j = 0; j < this.columns; j++) {
-                System.out.println(c[i][j].x + " " + c[i][j].y + "  ");
+                System.out.println(c[i][j].getX() + " " + c[i][j].getY() + "  ");
             }
             System.out.println('\n');
         }
@@ -306,7 +306,7 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
 
                     for (int i = 0; i < rows; i++) {
                         for (int j = 0; j < columns; j++) {
-                            if (c[i][j].click == false) {
+                            if (c[i][j].getClick() == false) {
                                 arr[i][j] = 0;
                             } else {
                                 arr[i][j] = 1;
@@ -320,13 +320,13 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
                         for (int j = 0; j < columns; j++) {
                             if(arr2[i][j]==0)
                             {
-                                c[i][j].click=false;
-                                c[i][j].btn.setBackground(Color.white);
+                                c[i][j].setClick(false);
+                                c[i][j].getBtn().setBackground(Color.white);
                             }
                             else
                             {
-                                c[i][j].click=true;
-                                c[i][j].btn.setBackground(Color.yellow);
+                                c[i][j].setClick(true);
+                                c[i][j].getBtn().setBackground(Color.yellow);
                             }
                         }
                     }
@@ -367,7 +367,7 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
                 }
                     for (int i = 0; i < rows; i++) {
                         for (int j = 0; j < columns; j++) {
-                            if (c[i][j].click == false) {
+                            if (c[i][j].getClick() == false) {
                                 arr[i][j] = 0;
                             } else {
                                 arr[i][j] = 1;
@@ -381,13 +381,13 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
                         for (int j =0; j < columns; j++) {
                             if(arr2[i][j]==0)
                             {
-                                c[i][j].click=false;
-                                c[i][j].btn.setBackground(Color.white);
+                                c[i][j].setClick(false);
+                                c[i][j].getBtn().setBackground(Color.white);
                             }
                             else if(arr2[i][j]==1)
                             {
-                                c[i][j].click=true;
-                                c[i][j].btn.setBackground(Color.yellow);
+                                c[i][j].setClick(true);
+                                c[i][j].getBtn().setBackground(Color.yellow);
                             }
                         }
                     }
@@ -415,10 +415,10 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
         timer.stop();
         this.counter = 0;
         label.setText(Integer.toString(counter));
-        start.click=false;
-        stop.click=true;
-        start.btn.setVisible(true);
-        stop.btn.setVisible(false);
+        start.setBool(false);
+        stop.setBool(true);
+        start.getBtn().setVisible(true);
+        stop.getBtn().setVisible(false);
 
         slider.setValue(7);
         speeder.setValue(13);
@@ -448,13 +448,13 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
             for (int j =0; j < columns; j++) {
                 if(arr[i][j]==0)
                 {
-                    c[i][j].click=false;
-                    c[i][j].btn.setBackground(Color.white);
+                    c[i][j].setClick(false);
+                    c[i][j].getBtn().setBackground(Color.white);
                 }
                 else if(arr[i][j]==1)
                 {
-                    c[i][j].click=true;
-                    c[i][j].btn.setBackground(Color.yellow);
+                    c[i][j].setClick(true);
+                    c[i][j].getBtn().setBackground(Color.yellow);
                 }
             }
 
@@ -518,36 +518,36 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource()==start.btn){
-            start.click=true;
-            stop.click=false;
-            start.btn.setVisible(false);
-            stop.btn.setVisible(true);
+        if(e.getSource()==start.getBtn()){
+            start.setBool(true);
+            stop.setBool(false);
+            start.getBtn().setVisible(false);
+            stop.getBtn().setVisible(true);
             this.StartGame();
 
 
         }
-        if(e.getSource()==stop.btn){
-            stop.click=true;
-            start.click=false;
-            start.btn.setVisible(true);
-            stop.btn.setVisible(false);
+        if(e.getSource()==stop.getBtn()){
+            stop.setBool(true);
+            start.setBool(false);
+            start.getBtn().setVisible(true);
+            stop.getBtn().setVisible(false);
             this.StopGame();
         }
-        if(e.getSource()==next.btn){
-            next.click=true;
+        if(e.getSource()==next.getBtn()){
+            next.setBool(true);
             this.NextGame();
         }
-        if(e.getSource()==reset.btn){
-            reset.click=true;
+        if(e.getSource()==reset.getBtn()){
+            reset.setBool(true);
             this.ResetGame();
         }
         if(e.getSource()==check){
 
             About a = new About();
         }
-        if(e.getSource() == save.btn){
-            I = new JFrame();
+        if(e.getSource() == save.getBtn()){
+            JFrame I = new JFrame();
             I.setLayout(new FlowLayout());
             I.setTitle("Save State");
             I.setSize(new Dimension(500,90));
@@ -577,7 +577,7 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
                         try {
                             for (int i = 0; i < rows; i++) {
                                 for (int j = 0; j < columns; j++) {
-                                    if (c[i][j].click == false) {
+                                    if (c[i][j].getClick() == false) {
                                         arr[i][j] = 0;
                                     } else {
                                         arr[i][j] = 1;
@@ -599,8 +599,8 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
             });
             I.setVisible(true);
      }
-        if(e.getSource()==view.btn){
-            F = new JFrame();
+        if(e.getSource()==view.getBtn()){
+            JFrame F = new JFrame();
 
             F.setSize(450,500);
             F.setTitle("View State");
@@ -624,15 +624,15 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
             panel2.setLayout(new BoxLayout(panel2,BoxLayout.Y_AXIS));
 
             panel1.setLayout(new FlowLayout());
-            panel1.add(this.load.btn);
+            panel1.add(this.load.getBtn());
 
-            load.btn.addActionListener(new ActionListener() {
+            load.getBtn().addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     System.out.println("Load");
 
                     //--------------------------------
-                    L=new JFrame();
+                    JFrame L=new JFrame();
                     L.setLayout(new FlowLayout());
                     L.setTitle("Load State");
                     L.setSize(new Dimension(500,90));
@@ -670,13 +670,13 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
                                     for (int j =0; j < columns; j++) {
                                         if(arr[i][j]==0)
                                         {
-                                            c[i][j].click=false;
-                                            c[i][j].btn.setBackground(Color.white);
+                                            c[i][j].setClick(false);
+                                            c[i][j].getBtn().setBackground(Color.white);
                                         }
                                         else if(arr[i][j]==1)
                                         {
-                                            c[i][j].click=true;
-                                            c[i][j].btn.setBackground(Color.yellow);
+                                            c[i][j].setClick(true);
+                                            c[i][j].getBtn().setBackground(Color.yellow);
                                         }
                                     }
 
@@ -697,15 +697,15 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
                 }
             });
 
-            panel1.add(this.delete.btn);
+            panel1.add(this.delete.getBtn());
 
-            delete.btn.addActionListener(new ActionListener() {
+            delete.getBtn().addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     System.out.println("Delete");
 
                     //--------------------------------
-                    D = new JFrame();
+                    JFrame D = new JFrame();
                     D.setLayout(new FlowLayout());
                     D.setTitle("Delete State");
                     D.setSize(new Dimension(500,90));

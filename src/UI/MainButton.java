@@ -5,8 +5,8 @@ import javax.swing.border.Border;
 import java.awt.*;
 
 public class MainButton {
-    boolean click;
-    JButton btn;
+    private boolean click;
+    private JButton btn;
 
     public MainButton(String s){
         this.click = false;
@@ -46,6 +46,10 @@ public class MainButton {
 
     public void setBool(boolean b){
         this.click = b;
+    }
+
+    public JButton getBtn(){
+        return this.btn;
     }
 
     public boolean getBool(){
