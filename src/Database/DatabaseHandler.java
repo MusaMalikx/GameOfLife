@@ -15,8 +15,29 @@ import BL.GameLogic.file;
 
 public class DatabaseHandler implements file {
 
-    private String user = "admin";
+    private String user = "root";
     private String password = "admin123";
+    private Connection con = null;
+
+    public DatabaseHandler()
+    {
+        try {
+
+            String url = "jdbc:mysql://localhost:3306/GameOfLife"; 			// connection string, GameOfLife is the name of the database
+            Class.forName("com.mysql.jdbc.Driver");
+            con = DriverManager.getConnection(url, user, password); // pass the connection string, username and password
+
+            System.out.println(con);
+            System.out.println("Database successfully Connected.");
+
+
+            //con.close();    //Close the connection
+
+        } catch (SQLException | ClassNotFoundException e) //exception handling
+        {
+            System.out.println(e);
+        }
+    }
 
     public String[] viewState() {
 
@@ -24,11 +45,7 @@ public class DatabaseHandler implements file {
 
         try {
 
-            String url = "jdbc:mysql://localhost/GameOfLife"; 			// connection string, GameOfLife is the name of the database
-            Connection con = DriverManager.getConnection(url, user, password); // pass the connection string, username and password
 
-            System.out.println(con);
-            System.out.println("Database successfully Connected.");
             Statement one = con.createStatement();
             String strViewStates = "call View_state;";
             ResultSet result = one.executeQuery(strViewStates);

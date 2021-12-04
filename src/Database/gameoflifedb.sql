@@ -15,6 +15,8 @@ BEGIN
 	REPLACE INTO Game_State(G_Name,Xcoord,Ycoord,Alive,Total_Xcoord,Total_Ycoord) VALUES(G_Namein,Xcoordin,Ycoordin,Alivein,Total_Xcoordin,Total_Ycoordin);
 END $$
 
+DELIMITER ;
+
 
 DROP PROCEDURE View_state
 
@@ -29,6 +31,7 @@ BEGIN
 	group by Game_State.G_Name;
     
 END $$
+DELIMITER ;
 
 
 DROP PROCEDURE Load_state
@@ -53,7 +56,7 @@ begin
 		
 	END IF;
 END $$
-
+DELIMITER ;
 
 
 
@@ -75,8 +78,10 @@ BEGIN
 		delete from Game_State where Game_State.G_Name = G_Namein;
 	END IF;
 END $$
+DELIMITER ;
 
------------------------------------------------------------------
---call deleteState ('New');
---call viewState;
---call loadState('nawal')
+/*-----------------------------------------------------------------
+call deleteState ('New');
+call viewState;
+call loadState('ameer')
+*/
