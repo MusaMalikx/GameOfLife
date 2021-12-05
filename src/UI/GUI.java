@@ -1,5 +1,6 @@
 package UI;
 import BL.GameLogic.GUI_implementation;
+import Database.DatabaseHandler;
 import File.File_Handling;
 
 public class GUI {
@@ -12,6 +13,9 @@ public class GUI {
         //   Console c=new Console(obj,obj2);
         //    c.GO();
 
-        GameFrame gf = new GameFrame(obj,obj2);
+            DatabaseHandler db = new DatabaseHandler();
+
+
+        GameFrame gf = new GameFrame(obj,db);
     }
 }
