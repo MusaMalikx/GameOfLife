@@ -3,8 +3,8 @@ package BL.GameLogic;
 import java.util.Objects;
 
 public class Grid_Controller {
-    int zoom;
-    int delay;
+    private int zoom;
+    private int delay;
 
     public Grid_Controller()
     {

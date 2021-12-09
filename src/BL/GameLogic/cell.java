@@ -1,10 +1,10 @@
 package BL.GameLogic;
 
 public class cell {
-   
-    int x,y;
-   boolean Alive;
-   int neighbourCount;
+
+   private int x,y;
+    private boolean Alive;
+    private  int neighbourCount;
 
    public cell()
    {

@@ -3,6 +3,7 @@ package UI;
 import java.awt.event.KeyEvent;
 import BL.GameLogic.GUI_implementation;
 import BL.GameLogic.file;
+import BL.GameLogic.Data;
 import BL.GameLogic.Grid;
 import BL.GameLogic.Grid_Controller;
 import BL.GameLogic.Rules;
@@ -26,17 +27,21 @@ public class Console {
         speederCount = 0;
         counter = 0;
         delay = 0;
-        arr=new int[60][80];
-        for (int i = 0; i < 60; i++) {
-            for (int j = 0; j < 80; j++) {
+        implementation= new GUI_implementation();
+        implementation= obj;
+
+        int col=implementation.getCol();
+        int row=implementation.getRow();
+        arr=new int[row][col];
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
 
                 arr[i][j] = 0;
 
             }
         }
 
-        implementation= new GUI_implementation();
-        implementation= obj;
+
         file_controller=new File_Handling();
         rows=20;
         columns=40;
@@ -48,14 +53,14 @@ public class Console {
 
         System.out.print("Enter index x : ");
         int x= sc.nextInt();
-        if(x>= 60)
+        if(x>= implementation.getRow())
         {
             System.out.println("max row index is : 60");
             return;
         }
         System.out.print("Enter index y : ");
         int y= sc.nextInt();
-        if(y>=80)
+        if(y>=implementation.getCol())
         {
             System.out.println("max col index is : 80" );
             return;
@@ -80,11 +85,13 @@ public class Console {
                     stop=false;
                     break;
                 }
+                   int col=implementation.getCol();
+                   int row=implementation.getRow();
+                   int arr2[][] = new int[row][col];
 
-                   int arr2[][] = new int[60][80];
                    arr2 = implementation.next(arr);
-                   for (int i = 0; i < 60; i++) {
-                       for (int j = 0; j < 80; j++) {
+                   for (int i = 0; i < row; i++) {
+                       for (int j = 0; j < col; j++) {
 
                            arr[i][j] = arr2[i][j];
 
@@ -114,11 +121,13 @@ start=false;
 
 next=true;
 
+        int col=implementation.getCol();
+        int row=implementation.getRow();
 
-                    int arr2[][] = new int[60][80];
+                    int arr2[][] = new int[row][col];
                     arr2 = implementation.next(arr);
-                    for (int i = 0; i < 60; i++) {
-                        for (int j = 0; j < 80; j++) {
+                    for (int i = 0; i < row; i++) {
+                        for (int j = 0; j < col; j++) {
 
                             arr[i][j] = arr2[i][j];
 
@@ -149,8 +158,11 @@ next=true;
         speederCount = 0;
         counter = 0;
         delay = 0;
-        for (int i = 0; i < 60; i++) {
-            for (int j = 0; j < 80; j++) {
+
+        int col=implementation.getCol();
+        int row=implementation.getRow();
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
 
                 arr[i][j] = 0;
 
@@ -175,7 +187,7 @@ next=true;
 
         System.out.print("Enter no of rows to display (max 60) : ");
         int x= sc.nextInt();
-        if(x>=60)
+        if(x>= implementation.getRow())
         {
             System.out.println("max row index is : 60");
             return;
@@ -184,7 +196,7 @@ next=true;
         rows=x;
         System.out.print("Enter no of Columns to display (max 80) : ");
         int y=sc.nextInt();
-        if(y>=80)
+        if(y>= implementation.getCol())
         {
             System.out.println("max col index is : 80");
             return;

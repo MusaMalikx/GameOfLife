@@ -1,7 +1,7 @@
 package Database;
 
 import BL.GameLogic.Grid;
-
+import BL.GameLogic.Data;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -77,7 +77,8 @@ public class DatabaseHandler implements file {
 
     public int[][] loadState(String GridName) {
 
-        int cells[][]=new int[60][80];
+        Data gridsize=new Data();
+        int cells[][]=new int[gridsize.getRow()][gridsize.getCol()];
         try {
 
             String url = "jdbc:mysql://localhost/GameOfLife";                   // connection string, GameOfLife is the name of the database
@@ -144,9 +145,11 @@ public class DatabaseHandler implements file {
             //Saving cell states one by one
             String strSaveState;
             int alive;
-
-            for (int X = 0; X < 60; X++) {
-                for (int Y = 0; Y < 80; Y++) {
+            Data gridSize=new Data();
+            int col=gridSize.getCol();
+            int row=gridSize.getRow();
+            for (int X = 0; X < row; X++) {
+                for (int Y = 0; Y < col; Y++) {
                     if (arr[X][Y] == 1) {
                         alive = 1;
                         strSaveState = "call Save_state " + "('" + GridName + "'," + X + "," + Y + "," + alive + "," + 60 + "," + 80 + ");";
