@@ -20,7 +20,7 @@ public class About extends JFrame {
     public void Images() {
 
         Member("/Members/maida.jpg","Maida Tariq");
-        Member("/Members/suleiman.jpg","Suleiman Javed");
+        Member("/Members/suleiman.jpg","Sulaiman Javed");
         Member("/Members/musa.jpg","Musa Malik");
         Member("/Members/burhan.jpg","Burhan Kiyani");
         Member("/Members/hamza.jpg","Ameer Hamza");
