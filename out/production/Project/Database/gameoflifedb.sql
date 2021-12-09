@@ -85,3 +85,4 @@ call deleteState ('New');
 call viewState;
 call loadState('ameer')
 */
+select* from game_state;

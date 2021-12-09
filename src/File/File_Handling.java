@@ -1,5 +1,6 @@
 package File;
 import BL.GameLogic.file;
+import BL.GameLogic.Data;
 import java.io.File;  // Import the File class
 import java.io.IOException;
 import java.io.FileWriter;
@@ -105,8 +106,10 @@ public class File_Handling implements file{
     public int[][] loadState(String n)throws Exception
     {
 
-
-        int arr[][]=new int [60][80];
+        Data gridSize=new Data();
+        int col=gridSize.getCol();
+        int row=gridSize.getRow();
+        int arr[][]=new int [row][col];
 
 
         Scanner sc = null;
@@ -119,10 +122,10 @@ public class File_Handling implements file{
             int data;
 
 
-            for (int i = 0;i<60 ; i++) {
+            for (int i = 0;i<row ; i++) {
 
 
-                for (int j=0; j<80;j++) {
+                for (int j=0; j<col;j++) {
 
                     data = Integer.parseInt(sc.next());
 
@@ -155,13 +158,15 @@ public class File_Handling implements file{
     public void saveState (int arr[][],String name)throws Exception {
 
 
-
+        Data gridSize=new Data();
+        int col=gridSize.getCol();
+        int row=gridSize.getRow();
 
 
                     FileWriter myWriter = new FileWriter(name+".txt");
 
-                    for (int i = 0; i < 60; i++) {
-                        for (int j = 0; j < 80; j++) {
+                    for (int i = 0; i < row; i++) {
+                        for (int j = 0; j < col; j++) {
                             myWriter.write(String.valueOf(arr[i][j]));
                             myWriter.write(" ");
                         }

@@ -16,6 +16,6 @@ public class GUI {
             DatabaseHandler db = new DatabaseHandler();
 
 
-        GameFrame gf = new GameFrame(obj,db);
+        GameFrame gf = new GameFrame(obj,obj2);
     }
 }
