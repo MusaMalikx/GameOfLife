@@ -39,9 +39,13 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
     });
 
     public GameFrame(GUI_implementation obj,file obj2){
-        arr=new int[60][80];
+
+
         implementation= new GUI_implementation();
         implementation= obj;
+        int row=implementation.getRow();
+        int col=implementation.getCol();
+        arr=new int[row][col];
 //        I = new JFrame();
 //        L = new JFrame();
 //        D = new JFrame();
@@ -104,9 +108,9 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
         speeder.addChangeListener(this);
 
         //this.rows = Integer.parseInt(r);
-        this.rows = 60;
+        this.rows = row;
         //this.columns = Integer.parseInt(c);
-        this.columns = 80;
+        this.columns = col;
 
         this.UI_FRAME();
     }
@@ -183,8 +187,8 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
         panel3.add(GridPanel,BorderLayout.CENTER);
 
         this.UI_GRID();
-        this.rows = 20;
-        this.columns = 40;
+        this.rows = implementation.getRow()/3;
+        this.columns = implementation.getCol()/2;
         this.UpdateUI_Grid();
 
         speeder.addChangeListener(this);
@@ -296,8 +300,8 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
                     {
                         break;
                     }
-                    for (int i = 0; i < 60; i++) {
-                        for (int j = 0; j < 80; j++) {
+                    for (int i = 0; i < implementation.getRow(); i++) {
+                        for (int j = 0; j < implementation.getCol(); j++) {
 
                             arr[i][j] = 0;
 
@@ -358,8 +362,8 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
 
 
                   //  int arr[][] = new int[60][80];
-                for (int i = 0; i < 60; i++) {
-                    for (int j = 0; j < 80; j++) {
+                for (int i = 0; i < implementation.getRow(); i++) {
+                    for (int j = 0; j < implementation.getCol(); j++) {
 
                             arr[i][j] = 0;
 
@@ -423,11 +427,11 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
         slider.setValue(7);
         speeder.setValue(13);
 
-        this.rows = 20;
-        this.columns = 40;
+        this.rows = implementation.getRow()/3;
+        this.columns = implementation.getCol()/2;
         this.UpdateUI_Grid();
-        for (int i = 0; i < 60; i++) {
-            for (int j = 0; j < 80; j++) {
+        for (int i = 0; i < implementation.getRow(); i++) {
+            for (int j = 0; j < implementation.getCol(); j++) {
 
                 arr[i][j] = 0;
 
@@ -485,13 +489,15 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
                 System.out.println("Slider Value " + slider.getValue() + " Rows : " + this.rows + " Columns : " + this.columns);
                 this.rows -= 1;
                 this.columns -= 2;
-                if(this.rows < 20 && this.columns < 40 ) {
+                if(this.rows < implementation.getRow()/3 && this.columns < implementation.getCol()/2 ) {
+
                     this.UpdateUI_Grid();
                     updateCells();
                 }
                 else{
-                    this.rows = 20;
-                    this.columns = 40;
+                    this.rows = implementation.getRow()/3;
+                    this.columns = implementation.getCol()/2;
+
                     this.UpdateUI_Grid();
                     updateCells();
 
@@ -501,13 +507,15 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
                 System.out.println("Slider Value " + slider.getValue() + " Rows : " + this.rows + " Columns : " + this.columns);
                 this.rows += 1;
                 this.columns += 2;
-                if(this.rows < 60 && this.columns < 80 ) {
+                if(this.rows < implementation.getRow() && this.columns < implementation.getCol() ) {
+
                     this.UpdateUI_Grid();
                     updateCells();
                 }
                 else{
-                    this.rows = 60;
-                    this.columns = 80;
+                    this.rows = implementation.getRow();
+                    this.columns = implementation.getCol();
+
                     this.UpdateUI_Grid();
                     updateCells();
                 }

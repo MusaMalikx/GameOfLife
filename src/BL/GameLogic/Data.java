@@ -5,8 +5,8 @@ public class Data {
     private int col;
 public Data()
 {
-    col=80;
-   row=60;
+    col=160;
+   row=120;
 }
     public int getRow()
 {

@@ -43,8 +43,8 @@ public class Console {
 
 
         file_controller=new File_Handling();
-        rows=20;
-        columns=40;
+        rows=row/3;
+        columns=col/2;
     }
     public void selectCell()
     {
@@ -249,20 +249,8 @@ next=true;
                         for(;;) {
                             next();
                             printGrid();
-                            Thread GameLoop1=new Thread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Scanner sc= new Scanner(System.in); //System.in is a standard input stream.
 
-                                    System.out.print("\nChose : ");
 
-                                    int x= sc.nextInt();
-                                    if(x==2)
-                                    {
-                                        stop();
-                                    }
-                                }
-                            });
                             if (stop == true) {
                                 stop = false;
                                 return;
@@ -270,6 +258,7 @@ next=true;
                         }                    }
                 });
                 GameLoop.start();
+
             }
             else if(x==2)
             {
