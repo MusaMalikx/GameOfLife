@@ -70,6 +70,7 @@ public class File_Handling implements file{
         try {
 
             File file = new File("Data.txt"); // java.io.File
+
             File file2 = new File(stateNum+".txt");
 
             file2.delete();
@@ -109,6 +110,7 @@ public class File_Handling implements file{
         Data gridSize=new Data();
         int col=gridSize.getCol();
         int row=gridSize.getRow();
+
         int arr[][]=new int [row][col];
 
 

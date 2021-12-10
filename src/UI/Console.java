@@ -1,5 +1,5 @@
 package UI;
-
+import java.lang.Thread;
 import java.awt.event.KeyEvent;
 import BL.GameLogic.GUI_implementation;
 import BL.GameLogic.file;
@@ -83,6 +83,7 @@ public class Console {
                 if(stop==true)
                 {
                     stop=false;
+                    start=false;
                     break;
                 }
                    int col=implementation.getCol();
@@ -113,10 +114,7 @@ start=false;
     }
     public void next()
     {
-        if(next==true)
-        {
-            return;
-        }
+
 
 
 next=true;
@@ -135,7 +133,7 @@ next=true;
 
                     }
                     try {
-                        Thread.sleep(speederCount*500);
+                        Thread.sleep(speederCount*1000);
                     }catch (Exception e) {
 
                         // catching the exception
@@ -243,8 +241,35 @@ next=true;
             else if(x==1)
             {
 
-                next();
 
+                Thread GameLoop=new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        for(;;) {
+                            next();
+                            printGrid();
+                            Thread GameLoop1=new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Scanner sc= new Scanner(System.in); //System.in is a standard input stream.
+
+                                    System.out.print("\nChose : ");
+
+                                    int x= sc.nextInt();
+                                    if(x==2)
+                                    {
+                                        stop();
+                                    }
+                                }
+                            });
+                            if (stop == true) {
+                                stop = false;
+                                return;
+                            }
+                        }                    }
+                });
+                GameLoop.start();
             }
             else if(x==2)
             {
