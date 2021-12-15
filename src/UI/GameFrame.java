@@ -191,8 +191,8 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
         this.columns = implementation.getCol()/2;
         this.UpdateUI_Grid();
 
-        speeder.addChangeListener(this);
         slider.addChangeListener(this);
+        speeder.addChangeListener(this);
 
         JPanel btnPanel = new JPanel();
         JPanel slidePanel = new JPanel();
