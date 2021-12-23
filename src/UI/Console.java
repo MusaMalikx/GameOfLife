@@ -8,6 +8,8 @@ import BL.GameLogic.Grid;
 import BL.GameLogic.Grid_Controller;
 import BL.GameLogic.Rules;
 import File.File_Handling;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 import java.util.Scanner;
 
@@ -30,8 +32,8 @@ public class Console {
         implementation= new GUI_implementation();
         implementation= obj;
 
-        int col=implementation.getCol();
-        int row=implementation.getRow();
+        int col=(int)implementation.getCol().get("col");
+        int row=(int)implementation.getRow().get("row");
         arr=new int[row][col];
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < col; j++) {
@@ -53,14 +55,14 @@ public class Console {
 
         System.out.print("Enter index x : ");
         int x= sc.nextInt();
-        if(x>= implementation.getRow())
+        if(x >= (int)implementation.getRow().get("row"))
         {
             System.out.println("max row index is : 60");
             return;
         }
         System.out.print("Enter index y : ");
         int y= sc.nextInt();
-        if(y>=implementation.getCol())
+        if(y>=(int)implementation.getCol().get("col"))
         {
             System.out.println("max col index is : 80" );
             return;
@@ -86,11 +88,14 @@ public class Console {
                     start=false;
                     break;
                 }
-                   int col=implementation.getCol();
-                   int row=implementation.getRow();
+                   int col=(int)implementation.getCol().get("col");
+                   int row=(int)implementation.getRow().get("row");
                    int arr2[][] = new int[row][col];
 
-                   arr2 = implementation.next(arr);
+                   //-------------------------------------------------/
+                   arr2 = implementation.JSONTOArray(implementation.next(implementation.ArrayToJSON(arr)));
+                   //-------------------------------------------------/
+
                    for (int i = 0; i < row; i++) {
                        for (int j = 0; j < col; j++) {
 
@@ -119,12 +124,16 @@ start=false;
 
 next=true;
 
-        int col=implementation.getCol();
-        int row=implementation.getRow();
+        int col=(int)implementation.getCol().get("col");
+        int row=(int)implementation.getRow().get("row");
 
                     int arr2[][] = new int[row][col];
-                    arr2 = implementation.next(arr);
-                    for (int i = 0; i < row; i++) {
+
+                    //--------------------------------------------/
+        arr2 = implementation.JSONTOArray(implementation.next(implementation.ArrayToJSON(arr)));
+        //------------------------------------------/
+
+        for (int i = 0; i < row; i++) {
                         for (int j = 0; j < col; j++) {
 
                             arr[i][j] = arr2[i][j];
@@ -157,8 +166,8 @@ next=true;
         counter = 0;
         delay = 0;
 
-        int col=implementation.getCol();
-        int row=implementation.getRow();
+        int col=(int)implementation.getCol().get("col");
+        int row=(int)implementation.getRow().get("row");
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < col; j++) {
 
@@ -185,7 +194,7 @@ next=true;
 
         System.out.print("Enter no of rows to display (max 60) : ");
         int x= sc.nextInt();
-        if(x>= implementation.getRow())
+        if(x>= (int)implementation.getRow().get("row"))
         {
             System.out.println("max row index is : 60");
             return;
@@ -194,7 +203,7 @@ next=true;
         rows=x;
         System.out.print("Enter no of Columns to display (max 80) : ");
         int y=sc.nextInt();
-        if(y>= implementation.getCol())
+        if(y>= (int)implementation.getCol().get("col"))
         {
             System.out.println("max col index is : 80");
             return;
@@ -310,12 +319,19 @@ next=true;
 
         System.out.print("\nEnter State name: ");
         String x= sc.next();
-        file_controller.saveState(arr,x);
+
+        file_controller.saveState(Str_ArrayToJSON(arr,x));
+        //file_controller.saveState(arr,x);
     }
     public void viewState()throws Exception
     {
         String arr2[]=new String[10];
-        arr2=file_controller.viewState();
+
+        //---------------------------------------/
+        arr2 = JSONToStrArray(file_controller.viewState());
+        //arr2=file_controller.viewState();
+        //--------------------------------------/
+
         for(int i=0;i<10;i++)
         {
             if(arr2[i]==null)
@@ -331,7 +347,12 @@ next=true;
 
         System.out.print("\nEnter State to Delete: ");
         String x= sc.next();
-        file_controller.deleteState(x);
+
+        //----------------------------------------------/
+        file_controller.deleteState(StringToJSON(x));
+        //file_controller.deleteState(x);
+        //----------------------------------------------/
+
     }
     public void loadState()throws Exception
     {
@@ -339,9 +360,93 @@ next=true;
 
         System.out.print("\nEnter State to load: ");
         String x= sc.next();
-       arr= file_controller.loadState (x);
+
+        //-----------------------------------------/
+        arr = JSONTOArray(file_controller.loadState(StringToJSON(x)));
+        //arr= file_controller.loadState (x);
+        //-----------------------------------------/
+
     }
 
+    public JSONObject StrArrayToJSON(String [] str){
+        JSONObject ob = new JSONObject();
 
+        for (int i = 0; i < str.length; i++) {
+            ob.put(Integer.toString(i),str[i]);
+        }
+
+        return ob;
+    }
+
+    public String[] JSONToStrArray(JSONObject js){
+        String []str = new String[js.size()];
+
+        for (int i = 0; i < js.size(); i++) {
+            str[i] = js.get(Integer.toString(i)).toString();
+        }
+
+        return str;
+    }
+
+    public JSONObject StringToJSON(String s){
+        JSONObject ob = new JSONObject();
+        ob.put("str",s);
+
+        return ob;
+    }
+
+    public String JSONToString(JSONObject ob){
+        String str = (String)ob.get("str");
+        return str;
+    }
+
+    public JSONObject ArrayToJSON(int[][] arr){
+        JSONObject o = new JSONObject();
+        //ar.add(arr);
+        //o.put("Array",ar);
+
+        JSONArray jsonArray = new JSONArray();
+        for (int[] ca : arr) {
+            JSONArray arr1 = new JSONArray();
+            for (int c : ca) {
+                arr1.add(c); // or some other conversion
+            }
+            jsonArray.add(arr1);
+        }
+
+        o.put("Array",jsonArray);
+
+        return o;
+
+    }
+
+    public int[][] JSONTOArray(JSONObject o){
+        JSONArray aar = (JSONArray)o.get("Array");
+        //System.out.println(aar.get(0));
+        //System.out.println(aar.get(0).length);
+        //System.out.println(aar.size());
+
+        int arr2[][] = new int[aar.size()][];
+
+        for (int i = 0; i < aar.size(); i++) {
+            //System.out.println(aar.get(i));
+            JSONArray a = (JSONArray)aar.get(i);
+            //System.out.println(a.size());
+            arr2[i] = new int[a.size()];
+            for (int j = 0; j < a.size(); j++) {
+                arr2[i][j] = (int)a.get(j);
+            }
+        }
+
+        return arr2;
+    }
+
+    public JSONObject Str_ArrayToJSON(int [][]arr,String n){
+        JSONObject o = new JSONObject();
+        o.put("Arr",ArrayToJSON(arr));
+        o.put("Str", n);
+
+        return o;
+    }
 
 }

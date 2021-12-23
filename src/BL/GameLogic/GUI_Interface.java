@@ -1,10 +1,12 @@
 package BL.GameLogic;
 
+import org.json.simple.JSONObject;
+
 public interface GUI_Interface {
    public void reset();
-    public int [][] next(int arr[][]);
-    public int getCol();
-    public int getRow();
+    public JSONObject next(JSONObject arr);
+    public JSONObject getCol();
+    public JSONObject getRow();
 
 
 }

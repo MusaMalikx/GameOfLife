@@ -13,7 +13,7 @@ public class GUI {
          // Console c=new Console(obj,obj2);
            // c.GO();
 
-            DatabaseHandler db = new DatabaseHandler();
+            //DatabaseHandler db = new DatabaseHandler();
 
 
         GameFrame gf = new GameFrame(obj,obj2);

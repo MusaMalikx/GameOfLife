@@ -11,6 +11,9 @@ import java.awt.event.ActionListener;
 import java.util.Objects;
 import BL.GameLogic.file;
 import File.File_Handling;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
 import java.lang.Exception;
 
 public class GameFrame extends JFrame implements ChangeListener, ActionListener
@@ -43,9 +46,9 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
 
         implementation= new GUI_implementation();
         implementation= obj;
-        int row=implementation.getRow();
-        int col=implementation.getCol();
-        arr=new int[row][col];
+        rows=(int)implementation.getRow().get("row");
+        columns=(int)implementation.getCol().get("col");
+        arr=new int[rows][columns];
 //        I = new JFrame();
 //        L = new JFrame();
 //        D = new JFrame();
@@ -108,9 +111,9 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
         speeder.addChangeListener(this);
 
         //this.rows = Integer.parseInt(r);
-        this.rows = row;
+        //this.rows = row;
         //this.columns = Integer.parseInt(c);
-        this.columns = col;
+        //this.columns = col;
 
         this.UI_FRAME();
     }
@@ -187,8 +190,8 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
         panel3.add(GridPanel,BorderLayout.CENTER);
 
         this.UI_GRID();
-        this.rows = implementation.getRow()/3;
-        this.columns = implementation.getCol()/2;
+        this.rows = (int)implementation.getRow().get("row")/4;
+        this.columns = (int)implementation.getCol().get("col")/3;
         this.UpdateUI_Grid();
 
         slider.addChangeListener(this);
@@ -300,8 +303,8 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
                     {
                         break;
                     }
-                    for (int i = 0; i < implementation.getRow(); i++) {
-                        for (int j = 0; j < implementation.getCol(); j++) {
+                    for (int i = 0; i < (int)implementation.getRow().get("row"); i++) {
+                        for (int j = 0; j < (int)implementation.getCol().get("col"); j++) {
 
                             arr[i][j] = 0;
 
@@ -318,7 +321,10 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
                         }
                     }
                     int arr2[][]=new int [rows][columns];
-                    arr2=implementation.next(arr);
+
+                    //----------------------------------------/
+                    arr2 = implementation.JSONTOArray(implementation.next(implementation.ArrayToJSON(arr)));
+                    //----------------------------------------/
 
                     for (int i = 0; i < rows; i++) {
                         for (int j = 0; j < columns; j++) {
@@ -355,6 +361,87 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
         timer.stop();
     }
 
+    public JSONObject StrArrayToJSON(String [] str){
+        JSONObject ob = new JSONObject();
+
+        for (int i = 0; i < str.length; i++) {
+            ob.put(Integer.toString(i),str[i]);
+        }
+
+        return ob;
+    }
+
+    public String[] JSONToStrArray(JSONObject js){
+        String []str = new String[js.size()];
+
+        for (int i = 0; i < js.size(); i++) {
+            str[i] = js.get(Integer.toString(i)).toString();
+        }
+
+        return str;
+    }
+
+    public JSONObject StringToJSON(String s){
+        JSONObject ob = new JSONObject();
+        ob.put("str",s);
+
+        return ob;
+    }
+
+    public String JSONToString(JSONObject ob){
+        String str = (String)ob.get("str");
+        return str;
+    }
+
+    public JSONObject ArrayToJSON(int[][] arr){
+        JSONObject o = new JSONObject();
+        //ar.add(arr);
+        //o.put("Array",ar);
+
+        JSONArray jsonArray = new JSONArray();
+        for (int[] ca : arr) {
+            JSONArray arr1 = new JSONArray();
+            for (int c : ca) {
+                arr1.add(c); // or some other conversion
+            }
+            jsonArray.add(arr1);
+        }
+
+        o.put("Array",jsonArray);
+
+        return o;
+
+    }
+
+    public int[][] JSONTOArray(JSONObject o){
+        JSONArray aar = (JSONArray)o.get("Array");
+        //System.out.println(aar.get(0));
+        //System.out.println(aar.get(0).length);
+        //System.out.println(aar.size());
+
+        int arr2[][] = new int[aar.size()][];
+
+        for (int i = 0; i < aar.size(); i++) {
+            //System.out.println(aar.get(i));
+            JSONArray a = (JSONArray)aar.get(i);
+            //System.out.println(a.size());
+            arr2[i] = new int[a.size()];
+            for (int j = 0; j < a.size(); j++) {
+                arr2[i][j] = (int)a.get(j);
+            }
+        }
+
+        return arr2;
+    }
+
+    public JSONObject Str_ArrayToJSON(int [][]arr,String n){
+        JSONObject o = new JSONObject();
+        o.put("Arr",ArrayToJSON(arr));
+        o.put("Str", n);
+
+        return o;
+    }
+
     public void NextGame(){
         Thread GameLoop=new Thread(new Runnable() {
             @Override
@@ -362,8 +449,8 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
 
 
                   //  int arr[][] = new int[60][80];
-                for (int i = 0; i < implementation.getRow(); i++) {
-                    for (int j = 0; j < implementation.getCol(); j++) {
+                for (int i = 0; i < (int)implementation.getRow().get("row"); i++) {
+                    for (int j = 0; j < (int)implementation.getCol().get("col"); j++) {
 
                             arr[i][j] = 0;
 
@@ -379,7 +466,10 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
                         }
                     }
                     int arr2[][]=new int [60][80];
-                    arr2=implementation.next(arr);
+
+                    //---------------------------------------/
+                arr2 = implementation.JSONTOArray(implementation.next(implementation.ArrayToJSON(arr)));
+                    //---------------------------------------/
 
                     for (int i = 0; i < rows; i++) {
                         for (int j =0; j < columns; j++) {
@@ -427,11 +517,11 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
         slider.setValue(7);
         speeder.setValue(13);
 
-        this.rows = implementation.getRow()/3;
-        this.columns = implementation.getCol()/2;
+        this.rows = (int)implementation.getRow().get("row")/4;
+        this.columns = (int)implementation.getCol().get("col")/3;
         this.UpdateUI_Grid();
-        for (int i = 0; i < implementation.getRow(); i++) {
-            for (int j = 0; j < implementation.getCol(); j++) {
+        for (int i = 0; i < (int)implementation.getRow().get("row"); i++) {
+            for (int j = 0; j < (int)implementation.getCol().get("col"); j++) {
 
                 arr[i][j] = 0;
 
@@ -489,14 +579,14 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
                 System.out.println("Slider Value " + slider.getValue() + " Rows : " + this.rows + " Columns : " + this.columns);
                 this.rows -= 1;
                 this.columns -= 2;
-                if(this.rows < implementation.getRow()/3 && this.columns < implementation.getCol()/2 ) {
+                if(this.rows < (int)implementation.getRow().get("row")/3 && this.columns < (int)implementation.getCol().get("col")/2 ) {
 
                     this.UpdateUI_Grid();
                     updateCells();
                 }
                 else{
-                    this.rows = implementation.getRow()/3;
-                    this.columns = implementation.getCol()/2;
+                    this.rows = (int)implementation.getRow().get("row")/3;
+                    this.columns = (int)implementation.getCol().get("col")/2;
 
                     this.UpdateUI_Grid();
                     updateCells();
@@ -507,14 +597,14 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
                 System.out.println("Slider Value " + slider.getValue() + " Rows : " + this.rows + " Columns : " + this.columns);
                 this.rows += 1;
                 this.columns += 2;
-                if(this.rows < implementation.getRow() && this.columns < implementation.getCol() ) {
+                if(this.rows < (int)implementation.getRow().get("row") && this.columns < (int)implementation.getCol().get("col") ) {
 
                     this.UpdateUI_Grid();
                     updateCells();
                 }
                 else{
-                    this.rows = implementation.getRow();
-                    this.columns = implementation.getCol();
+                    this.rows = (int)implementation.getRow().get("row");
+                    this.columns = (int)implementation.getCol().get("col");
 
                     this.UpdateUI_Grid();
                     updateCells();
@@ -593,7 +683,10 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
                                 }
                             }
 
-                            file_controller.saveState(arr, input.getText());
+                            //-----------------------------------------------/
+                            file_controller.saveState(Str_ArrayToJSON(arr,input.getText()));
+                            //file_controller.saveState(arr, input.getText());
+                            //----------------------------------------------/
                         }
                         catch(Exception ex)
                         {
@@ -673,7 +766,11 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
                             System.out.println(lo.getText());
                             //load
                             try {
-                                arr = file_controller.loadState(lo.getText());
+
+                                //----------------------------------------------------/
+                                arr = JSONTOArray(file_controller.loadState(StringToJSON(lo.getText())));
+                                //arr = file_controller.loadState(lo.getText());
+                                //----------------------------------------------------/
                                 for (int i = 0; i < rows; i++) {
                                     for (int j =0; j < columns; j++) {
                                         if(arr[i][j]==0)
@@ -745,7 +842,10 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
                             System.out.println(de.getText());
                             //delete
                             try {
-                                 file_controller.deleteState(de.getText());
+                                //--------------------------------------------/
+                                file_controller.deleteState(StringToJSON(de.getText()));
+                                 //file_controller.deleteState(de.getText());
+                                //------------------------------------------/
                             }
                             catch (Exception ex)
                             {
@@ -765,9 +865,10 @@ public class GameFrame extends JFrame implements ChangeListener, ActionListener
             String arr2[]=new String[10];
 
             try {
-
-
-                arr2 = file_controller.viewState();
+                //--------------------------------------------------/
+                arr2 = JSONToStrArray(file_controller.viewState());
+                //arr2 = file_controller.viewState();
+                //---------------------------------------------------/
                 for (int i = 0; i < 10; i++) {
                     if (arr2[i] == null) {
                         break;

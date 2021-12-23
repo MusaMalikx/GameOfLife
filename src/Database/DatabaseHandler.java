@@ -12,6 +12,8 @@ import javax.sql.StatementEvent;
 import java.sql.*;
 import java.sql.Types;
 import BL.GameLogic.file;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 public class DatabaseHandler implements file {
 
@@ -39,7 +41,7 @@ public class DatabaseHandler implements file {
         }
     }
 
-    public String[] viewState() {
+    public JSONObject viewState() {
 
         ArrayList<String> StatesData = new ArrayList<String>();
 
@@ -72,10 +74,15 @@ public class DatabaseHandler implements file {
             output[i] = StatesData.get(i);
         }
 
-        return output;
+        //----------------------------/
+        return StrArrayToJSON(output);
+        //return StringToJSON(output);
+        //----------------------------/
     }
 
-    public int[][] loadState(String GridName) {
+    public JSONObject loadState(JSONObject ob) {
+
+        String GridName = JSONToString(ob);
 
         Data gridsize=new Data();
         int cells[][]=new int[gridsize.getRow()][gridsize.getCol()];
@@ -126,12 +133,18 @@ public class DatabaseHandler implements file {
             System.out.println(e);
         }
 
-
-        return cells;   //return 2d array
+        //-------------------------------------/
+        return ArrayToJSON(cells);
+        //return cells;   //return 2d array
+        //-------------------------------------/
 
     }
 
-    public void saveState(int arr[][], String GridName) {
+    public void saveState(JSONObject ob) {
+
+        JSONObject o = (JSONObject) ob.get("Arr");
+        int [][]arr = JSONTOArray(o);
+        String GridName = (String)ob.get("Str");
 
         try {
 
@@ -166,7 +179,12 @@ public class DatabaseHandler implements file {
         }
     }
 
-    public void deleteState(String Gridname) {
+    public void deleteState(JSONObject ob) {
+
+        //-------------------------------/
+        String Gridname = JSONToString(ob);
+        //------------------------------/
+
         try {
 
             String url = "jdbc:mysql://localhost/GameOfLife"; // connection string here; GameOfLife is the name of the database
@@ -184,6 +202,87 @@ public class DatabaseHandler implements file {
             System.out.println(e);
         }
 
+    }
+
+    public JSONObject StrArrayToJSON(String [] str){
+        JSONObject ob = new JSONObject();
+
+        for (int i = 0; i < str.length; i++) {
+            ob.put(Integer.toString(i),str[i]);
+        }
+
+        return ob;
+    }
+
+    public String[] JSONToStrArray(JSONObject js){
+        String []str = new String[js.size()];
+
+        for (int i = 0; i < js.size(); i++) {
+            str[i] = js.get(Integer.toString(i)).toString();
+        }
+
+        return str;
+    }
+
+    public JSONObject StringToJSON(String s){
+        JSONObject ob = new JSONObject();
+        ob.put("str",s);
+
+        return ob;
+    }
+
+    public String JSONToString(JSONObject ob){
+        String str = (String)ob.get("str");
+        return str;
+    }
+
+    public JSONObject ArrayToJSON(int[][] arr){
+        JSONObject o = new JSONObject();
+        //ar.add(arr);
+        //o.put("Array",ar);
+
+        JSONArray jsonArray = new JSONArray();
+        for (int[] ca : arr) {
+            JSONArray arr1 = new JSONArray();
+            for (int c : ca) {
+                arr1.add(c); // or some other conversion
+            }
+            jsonArray.add(arr1);
+        }
+
+        o.put("Array",jsonArray);
+
+        return o;
+
+    }
+
+    public int[][] JSONTOArray(JSONObject o){
+        JSONArray aar = (JSONArray)o.get("Array");
+        //System.out.println(aar.get(0));
+        //System.out.println(aar.get(0).length);
+        //System.out.println(aar.size());
+
+        int arr2[][] = new int[aar.size()][];
+
+        for (int i = 0; i < aar.size(); i++) {
+            //System.out.println(aar.get(i));
+            JSONArray a = (JSONArray)aar.get(i);
+            //System.out.println(a.size());
+            arr2[i] = new int[a.size()];
+            for (int j = 0; j < a.size(); j++) {
+                arr2[i][j] = (int)a.get(j);
+            }
+        }
+
+        return arr2;
+    }
+
+    public JSONObject Str_ArrayToJSON(int [][]arr,String n){
+        JSONObject o = new JSONObject();
+        o.put("Arr",ArrayToJSON(arr));
+        o.put("Str", n);
+
+        return o;
     }
 
 }
