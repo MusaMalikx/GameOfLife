@@ -9,26 +9,31 @@ import java.io.*;
 import java.util.*;
 import  java.lang.String;
 
-public class File_Handling implements file{
+public class File_Handling implements file {
 
     public File_Handling() {
 
-       }
+    }
 
-    public static String fileToString(String filePath) throws Exception{
+    public static String fileToString(String filePath) {
         String input = null;
-        Scanner sc = new Scanner(new File(filePath));
         StringBuffer sb = new StringBuffer();
-        while (sc.hasNextLine()) {
-            input = sc.nextLine();
-            sb.append(input);
+        try {
+            Scanner sc = new Scanner(new File(filePath));
+
+            while (sc.hasNextLine()) {
+                input = sc.nextLine();
+                sb.append(input);
+            }
+
+        } catch (Exception ex) {
+            System.out.println(ex);
         }
         return sb.toString();
     }
 
-    public String[] viewState()throws Exception
-    {
-        String arr[]=new String[10];
+    public String[] viewState() {
+        String arr[] = new String[10];
         Scanner sc = null;
 
         try {
@@ -38,26 +43,20 @@ public class File_Handling implements file{
             sc = new Scanner(file);     // java.util.Scanner
             String data;
 
-            int i=0;
-            while(sc.hasNextLine()) {
+            int i = 0;
+            while (sc.hasNextLine()) {
 
-                    data =(sc.next());
-                    arr[i]=data;
-                    i++;
+                data = (sc.next());
+                arr[i] = data;
+                i++;
 
             }
 
-        }
-
-        catch(FileNotFoundException e)
-
-        {
+        } catch (FileNotFoundException e) {
 
             e.printStackTrace();
 
-        }
-
-        finally {
+        } finally {
 
             if (sc != null) sc.close();
 
@@ -66,12 +65,13 @@ public class File_Handling implements file{
         return arr;
 
     }
-    public void deleteState(String stateNum)throws Exception{
+
+    public void deleteState(String stateNum) {
         try {
 
             File file = new File("Data.txt"); // java.io.File
 
-            File file2 = new File(stateNum+".txt");
+            File file2 = new File(stateNum + ".txt");
 
             file2.delete();
 
@@ -80,7 +80,7 @@ public class File_Handling implements file{
 
             //Replacing the word with desired one
 
-            result = result.replaceAll("\\b"+" "+stateNum+"\\b", "");
+            result = result.replaceAll("\\b" + " " + stateNum + "\\b", "");
             //Rewriting the contents of the file
             PrintWriter writer = new PrintWriter(new File(filePath));
             writer.append(result);
@@ -89,14 +89,7 @@ public class File_Handling implements file{
             writer.close();
 
 
-
-        }
-
-
-
-        catch(FileNotFoundException e)
-
-        {
+        } catch (FileNotFoundException e) {
 
             e.printStackTrace();
 
@@ -104,52 +97,43 @@ public class File_Handling implements file{
 
     }
 
-    public int[][] loadState(String n)throws Exception
-    {
+    public int[][] loadState(String n) {
 
-        Data gridSize=new Data();
-        int col=gridSize.getCol();
-        int row=gridSize.getRow();
+        Data gridSize = new Data();
+        int col = gridSize.getCol();
+        int row = gridSize.getRow();
 
-        int arr[][]=new int [row][col];
+        int arr[][] = new int[row][col];
 
 
         Scanner sc = null;
 
         try {
 
-            File file = new File(n+".txt"); // java.io.File
+            File file = new File(n + ".txt"); // java.io.File
 
             sc = new Scanner(file);     // java.util.Scanner
             int data;
 
 
-            for (int i = 0;i<row ; i++) {
+            for (int i = 0; i < row; i++) {
 
 
-                for (int j=0; j<col;j++) {
+                for (int j = 0; j < col; j++) {
 
                     data = Integer.parseInt(sc.next());
 
-                    arr[i][j]=data;
+                    arr[i][j] = data;
                 }
-
-
 
 
             }
 
-        }
-
-        catch(FileNotFoundException e)
-
-        {
+        } catch (FileNotFoundException e) {
 
             e.printStackTrace();
 
-        }
-
-        finally {
+        } finally {
 
             if (sc != null) sc.close();
 
@@ -157,40 +141,45 @@ public class File_Handling implements file{
         return arr;
     }
 
-    public void saveState (int arr[][],String name)throws Exception {
+    public void saveState(int arr[][], String name) {
 
 
-        Data gridSize=new Data();
-        int col=gridSize.getCol();
-        int row=gridSize.getRow();
+        Data gridSize = new Data();
+        int col = gridSize.getCol();
+        int row = gridSize.getRow();
 
+        try {
+            FileWriter myWriter = new FileWriter(name + ".txt");
 
-                    FileWriter myWriter = new FileWriter(name+".txt");
-
-                    for (int i = 0; i < row; i++) {
-                        for (int j = 0; j < col; j++) {
-                            myWriter.write(String.valueOf(arr[i][j]));
-                            myWriter.write(" ");
-                        }
-                        myWriter.write('\n');
-                    }
-
-
-                    //FileWriter myWriter3 = new FileWriter("Data.txt");
-        String filePath = "Data.txt";
-        String result = fileToString(filePath);
-        result=result+" "+name;
-        PrintWriter writer = new PrintWriter(new File(filePath));
-        writer.append(result);
-        writer.flush();
-
-        writer.close();
-
-                    myWriter.close();
-
-
+            for (int i = 0; i < row; i++) {
+                for (int j = 0; j < col; j++) {
+                    myWriter.write(String.valueOf(arr[i][j]));
+                    myWriter.write(" ");
                 }
+                myWriter.write('\n');
             }
+
+
+            //FileWriter myWriter3 = new FileWriter("Data.txt");
+            String filePath = "Data.txt";
+            String result = fileToString(filePath);
+            result = result + " " + name;
+            PrintWriter writer = new PrintWriter(new File(filePath));
+            writer.append(result);
+            writer.flush();
+
+            writer.close();
+
+            myWriter.close();
+
+
+        }
+        catch(Exception ex)
+        {
+            System.out.println(ex);
+        }
+    }
+}
 
 
 
