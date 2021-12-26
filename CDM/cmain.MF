@@ -1,4 +1,0 @@
-Manifest-Version: 1.0
-Class-Path: BL.jar DB.jar FH.jar CUI.jar
-Main-Class: main
-

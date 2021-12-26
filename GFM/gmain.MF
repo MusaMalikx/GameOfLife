@@ -1,4 +1,0 @@
-Manifest-Version: 1.0
-Class-Path: BL.jar FH.jar GUI.jar
-Main-Class: gmain
-
